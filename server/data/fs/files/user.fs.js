@@ -1,5 +1,5 @@
-const fs = require("fs");
-const crypto = require("crypto");
+import fs from "fs"
+import crypto from "crypto"
 
 class UserManager {
   static #users = [];
@@ -92,11 +92,6 @@ class UserManager {
   }
 }
 
-const users = new UserManager("./fs/files/users.json");
-//users.create({ name: "thomy" });
-users.create({ name: "thomy", photo: "aaa", email: "aaa@aaa" });
-//users.read();
-//users.readOne("abc123");
-users.readOne("3dd63865428a0d74034f9bc5");
-users.destroy("abc123");
-users.destroy("3dd63865428a0d74034f9bc5");
+const users = new UserManager("./server/data/fs/files/users.json");
+
+export default users;

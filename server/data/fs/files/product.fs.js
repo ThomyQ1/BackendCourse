@@ -1,5 +1,5 @@
-const fs = require("fs");
-const crypto = require("crypto");
+import fs from "fs";
+import crypto from "crypto";
 
 class ProductManager {
   static #products = [];
@@ -94,16 +94,6 @@ class ProductManager {
   }
 }
 
-async function manage() {
-  const products = new ProductManager("./fs/files/products.json");
+const products = new ProductManager("./server/data/fs/files/products.json");
+export default products;
 
-  await products.create({ title: "thom", photo: "aaa", price: 250, stock: 15 });
-  await products.create({ title: "thom" });
-  await products.read();
-  await products.readOne("1");
-  await products.readOne("8a0ed52d35a8275a074d0092");
-  await products.destroy("1");
-  await products.destroy("35df7f2fc1bb6c417d1d3667");
-}
-
-manage();
