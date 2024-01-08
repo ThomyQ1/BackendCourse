@@ -1,5 +1,5 @@
-const fs = require("fs");
-const crypto = require("crypto");
+import fs from "fs";
+import crypto from "node:crypto";
 
 class ProductManager {
   static #products = [];
@@ -58,17 +58,13 @@ class ProductManager {
   }
 
   readOne(id) {
-    try {
-      const one = ProductManager.#products.find((each) => each.id === id);
-      if (one) {
-        console.log(one);
-        return one;
-      } else {
-        throw new Error("There'nt any products");
-      }
-    } catch (error) {
-      console.log(error.message);
-      return error.message;
+    const one = ProductManager.#products.find((each) => each.id === id);
+
+    if (one) {
+      console.log(one);
+      return one;
+    } else {
+      return null;
     }
   }
 
@@ -94,16 +90,5 @@ class ProductManager {
   }
 }
 
-async function manage() {
-  const products = new ProductManager("./fs/files/products.json");
-
-  await products.create({ title: "thom", photo: "aaa", price: 250, stock: 15 });
-  await products.create({ title: "thom" });
-  await products.read();
-  await products.readOne("1");
-  await products.readOne("8a0ed52d35a8275a074d0092");
-  await products.destroy("1");
-  await products.destroy("35df7f2fc1bb6c417d1d3667");
-}
-
-manage();
+const productsManager = new ProductManager("./data/fs/files/products.json");
+export default productsManager;

@@ -68,24 +68,4 @@ class ProductManager {
 }
 
 const products = new ProductManager();
-console.log(products.read());
-const prodcut1 = products.create({
-  title: "Goma",
-  photo: "goma.jpg",
-  price: 50,
-  stock: 150,
-});
-const prodcut2 = products.create({
-  title: "Boligrafo",
-  photo: "Boligrafo Parker.jpg",
-  price: 500,
-  stock: 5,
-});
-
-const prodcut3 = products.create({ title: "Tijera", Price: 150 });
-console.log(prodcut1, prodcut2, prodcut3);
-console.log(products.read());
-console.log(products.readOne(1));
-console.log(products.readOne(10));
-console.log(products.destroy(1));
-console.log(products.destroy(10));
+export default products
