@@ -1,5 +1,5 @@
-import fs from "fs"
-import crypto from "crypto"
+import fs from "fs";
+import crypto from "node:crypto";
 
 class UserManager {
   static #users = [];
@@ -41,31 +41,24 @@ class UserManager {
     }
   }
   read() {
-    try {
-      if (UserManager.#users.length === 0) {
-        throw new Error("There'nt Users");
-      } else {
-        console.log(UserManager.#users);
-        return UserManager.#users;
-      }
-    } catch (error) {
-      console.log(error.message);
-      return error.message;
+    if (UserManager.#users.length === 0) {
+      console.log("There aren't any users");
+      return [];
+    } else {
+      console.log(UserManager.#users);
+      return UserManager.#users;
     }
   }
 
   readOne(id) {
-    try {
-      const one = UserManager.#users.find((each) => each.id === id);
-      if (one) {
-        console.log(one);
-        return one;
-      } else {
-        throw new Error("There'nt user with ID " + id);
-      }
-    } catch (error) {
-      console.log(error.message);
-      return error.message;
+    const one = UserManager.#users.find((each) => each.id === id);
+
+    if (one) {
+      console.log(one);
+      return one;
+    } else {
+      console.log("There isn't a user with ID " + id);
+      return null;
     }
   }
 
@@ -92,6 +85,5 @@ class UserManager {
   }
 }
 
-const users = new UserManager("./server/data/fs/files/users.json");
-
-export default users;
+const usersManager = new UserManager("./data/fs/files/users.json");
+export default usersManager;

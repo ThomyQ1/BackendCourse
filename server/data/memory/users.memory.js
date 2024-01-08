@@ -66,15 +66,5 @@ class UserManager {
   }
 }
 
-const User = new UserManager();
-let Users = User.read();
-console.log(Users);
-const User1 = User.create({ name: "Thomy", photo: "photo", email: "email" });
-const User2 = User.create({ name: "Leonel", photo: "photo", email: "email" });
-const User3 = User.create({ name: "Quevedo" });
-console.log(User1, User2, User3);
-Users = User.read();
-console.log(Users);
-const One = User.readOne(1);
-const Three = User.readOne(3);
-console.log(One, Three);
+const user = new UserManager();
+export default user

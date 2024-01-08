@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "id": "1972b3fa1ec91bc605ebd7a6",
+    "title": "Jabon Lux",
+    "photo": "jabonlux.jpg",
+    "price": 50,
+    "stock": 1000
+  }
+]

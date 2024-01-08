@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "id": "72371600e396dc69af964a2c",
+    "name": "ivan",
+    "photo": "ivan.jpg",
+    "email": "prueba1@gmail.com"
+  },
+  {
+    "id": "020c5bbea5ce2d4eb90a7a07",
+    "name": "jose",
+    "photo": "jose.jpg",
+    "email": "prueba2@gmail.com"
+  },
+  {
+    "id": "295173dd773a91220994e6cf",
+    "name": "thomy",
+    "photo": "martin.jpg",
+    "email": "prueba3@gmail.com"
+  }
+]

@@ -1,5 +1,5 @@
 import fs from "fs";
-import crypto from "crypto";
+import crypto from "node:crypto";
 
 class ProductManager {
   static #products = [];
@@ -58,17 +58,13 @@ class ProductManager {
   }
 
   readOne(id) {
-    try {
-      const one = ProductManager.#products.find((each) => each.id === id);
-      if (one) {
-        console.log(one);
-        return one;
-      } else {
-        throw new Error("There'nt any products");
-      }
-    } catch (error) {
-      console.log(error.message);
-      return error.message;
+    const one = ProductManager.#products.find((each) => each.id === id);
+
+    if (one) {
+      console.log(one);
+      return one;
+    } else {
+      return null;
     }
   }
 
@@ -94,6 +90,5 @@ class ProductManager {
   }
 }
 
-const products = new ProductManager("./server/data/fs/files/products.json");
-export default products;
-
+const productsManager = new ProductManager("./data/fs/files/products.json");
+export default productsManager;
