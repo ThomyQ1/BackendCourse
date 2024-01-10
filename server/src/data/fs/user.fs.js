@@ -41,13 +41,15 @@ class UserManager {
     }
   }
   read() {
-    if (UserManager.#users.length === 0) {
-      console.log("There aren't any users");
-      return [];
-    } else {
-      console.log(UserManager.#users);
-      return UserManager.#users;
-    }
+    return new Promise((resolve, reject) => {
+      if (UserManager.#users.length === 0) {
+        console.log("There aren't any users");
+        resolve([]);
+      } else {
+        console.log(UserManager.#users);
+        resolve(UserManager.#users);
+      }
+    });
   }
 
   readOne(id) {
@@ -85,5 +87,5 @@ class UserManager {
   }
 }
 
-const usersManager = new UserManager("./data/fs/files/users.json");
+const usersManager = new UserManager("./src/data/fs/files/users.json");
 export default usersManager;
