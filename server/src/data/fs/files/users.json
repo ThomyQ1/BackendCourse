@@ -16,5 +16,17 @@
     "name": "thomy",
     "photo": "martin.jpg",
     "email": "prueba3@gmail.com"
+  },
+  {
+    "id": "daeb622dc07da2f9737ffcc1",
+    "name": "thomas",
+    "photo": "thomas.jpg",
+    "email": "emaildethomas@gmail.com"
+  },
+  {
+    "id": "5f426a97363a44aa822d6ee9",
+    "name": "juan",
+    "photo": "juan.jpg",
+    "email": "juan@gmail.com"
   }
 ]

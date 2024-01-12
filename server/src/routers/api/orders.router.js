@@ -59,3 +59,5 @@ ordersRouter.delete("/:oid", async (req, res, next) => {
     return next(error);
   }
 });
+
+export default ordersRouter

@@ -1,4 +1,4 @@
-function propsProducts(req, res, next) {
+function propsOrders(req, res, next) {
     const { uid, pid, quantity, state } = req.body;
     if (!uid || !pid || !quantity || !state) {
       return res.json({
@@ -10,5 +10,5 @@ function propsProducts(req, res, next) {
     }
   }
   
-  export default propsProducts;
+  export default propsOrders;
   

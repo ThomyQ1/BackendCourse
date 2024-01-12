@@ -20,6 +20,10 @@ class OrdersManager {
 
   async create(data) {
     try {
+      if (!data.uid || !data.pid || !data.quantity) {
+        throw new Error("UID, PID, and Quantity are required fields");
+      }
+
       const order = {
         oid: crypto.randomBytes(12).toString("hex"),
         uid: data.uid,
@@ -27,16 +31,19 @@ class OrdersManager {
         quantity: data.quantity,
         state: data.state || "pending",
       };
+
       OrdersManager.#orders.push(order);
+
       await fs.promises.writeFile(
         this.path,
         JSON.stringify(OrdersManager.#orders, null, 2)
       );
+
       console.log("Created OID:" + order.oid);
       return order;
     } catch (error) {
-      console.log(error.message);
-      return error.message;
+      console.error(error.message);
+      throw error;
     }
   }
 
@@ -49,14 +56,14 @@ class OrdersManager {
         return OrdersManager.#orders;
       }
     } catch (error) {
-      console.log(error.message);
-      return error.message;
+      console.error(error.message);
+      throw error;
     }
   }
 
-  readOne(uid) {
+  async readOne(oid) {
     const userOrders = OrdersManager.#orders.filter(
-      (order) => order.uid === uid
+      (order) => order.oid === oid
     );
 
     if (userOrders.length > 0) {
@@ -77,17 +84,19 @@ class OrdersManager {
         if (state !== undefined) {
           order.state = state;
         }
+
         await fs.promises.writeFile(
           this.path,
           JSON.stringify(OrdersManager.#orders, null, 2)
         );
+
         console.log("Updated OID:" + oid);
       } else {
         throw new Error("Order not found");
       }
     } catch (error) {
-      console.log(error.message);
-      return error.message;
+      console.error(error.message);
+      throw error;
     }
   }
 
@@ -98,17 +107,19 @@ class OrdersManager {
         OrdersManager.#orders = OrdersManager.#orders.filter(
           (each) => each.oid !== oid
         );
+
         await fs.promises.writeFile(
           this.path,
           JSON.stringify(OrdersManager.#orders, null, 2)
         );
+
         console.log("Destroyed OID:" + oid);
       } else {
         throw new Error("Order not found");
       }
     } catch (error) {
-      console.log(error.message);
-      return error.message;
+      console.error(error.message);
+      throw error;
     }
   }
 }

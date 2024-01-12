@@ -1,7 +1,7 @@
-function propsProducts(req, res, next) {
+function propsUsers(req, res, next) {
   const { name, photo, email } = req.body;
-  if (!data.name || !data.photo || !data.email) {
-    return res.json({
+  if (!name || !photo || !email) {
+    return res.status(400).json({
       statusCode: 400,
       response: `${req.method} ${req.url} All fields are required `,
     });
@@ -10,4 +10,4 @@ function propsProducts(req, res, next) {
   }
 }
 
-export default propsProducts;
+export default propsUsers;
