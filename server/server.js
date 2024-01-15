@@ -17,9 +17,8 @@ server.listen(PORT, ready);
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
-server.use(express.static(__dirname+"/public"))
-server.use(morgan("dev"))
+server.use(express.static(__dirname + "/public"));
+server.use(morgan("dev"));
 server.use("/", router);
 server.use(errorHandler);
 server.use(pathHandler);
-
