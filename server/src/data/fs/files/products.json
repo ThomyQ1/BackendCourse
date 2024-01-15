@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1972b3fa1ec91bc605ebd7a6",
+    "title": "Jabon Lux",
+    "photo": "jabonlux.jpg",
+    "price": 50,
+    "stock": 1000
+  },
+  {
+    "id": "9d6f01e6640b95f6211cd028",
+    "title": "Jugo Tang Mandarina",
+    "photo": "jugotangmandarina.jpg",
+    "price": 15,
+    "stock": 500
+  },
+  {
+    "id": "221deb95ce528a1751aec686",
+    "title": "Levite de pera",
+    "photo": "peralevite.jpg",
+    "price": 120,
+    "stock": 35
+  }
+]
