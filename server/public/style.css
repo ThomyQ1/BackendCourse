@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&family=Montserrat&family=Noto+Sans:wght@300&family=Nunito+Sans:opsz,wght@6..12,300&family=Playpen+Sans:wght@200&family=Quicksand&family=Raleway&family=Ubuntu:wght@300&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  scroll-behavior: smooth;
+}
+
+nav {
+  background-color: grey;
+  color: white;
+  font-size: 20px;
+  padding: 6px;
+}
+
+.fixP {
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px 10px;
+  margin: 10px;
+  margin-bottom: 15px;
+}
+
+.card {
+  border-radius: 0px;
+  font-size: 14px;
+  box-shadow: 2px;
+}
+
+.custom-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50vh;
+  justify-content: center;
+  border: 1px solid #ccc;
+}
+
+.custom-card img {
+  width: 100%;
+  height: auto;
+}
+
+.custom-card .datos {
+  padding: 15px;
+}

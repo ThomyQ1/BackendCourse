@@ -3,6 +3,7 @@ import crypto from "node:crypto";
 
 class UserManager {
   static #users = [];
+
   init() {
     const exist = fs.existsSync(this.path);
     if (!exist) {
@@ -11,6 +12,7 @@ class UserManager {
       UserManager.#users = JSON.parse(fs.readFileSync(this.path, "utf-8"));
     }
   }
+
   constructor(path) {
     this.path = path;
     this.init();
@@ -32,22 +34,25 @@ class UserManager {
           this.path,
           JSON.stringify(UserManager.#users, null, 2)
         );
-        console.log("Created Id:" + user.id);
+        console.log("Created Id: " + user.id);
         return user.id;
       }
     } catch (error) {
-      console.log(error.message);
-      return error.message;
+      console.error("Error in create:", error.message);
+      throw error;
     }
   }
+
   read() {
-    if (UserManager.#users.length === 0) {
-      console.log("There aren't any users");
-      return [];
-    } else {
-      console.log(UserManager.#users);
-      return UserManager.#users;
-    }
+    return new Promise((resolve) => {
+      if (UserManager.#users.length === 0) {
+        console.log("There aren't any users");
+        resolve([]);
+      } else {
+        console.log(UserManager.#users);
+        resolve(UserManager.#users);
+      }
+    });
   }
 
   readOne(id) {
@@ -76,14 +81,14 @@ class UserManager {
         console.log("Destroyed ID: " + id);
         return id;
       } else {
-        throw new Error("There'nt user with ID" + id);
+        throw new Error("There isn't a user with ID " + id);
       }
     } catch (error) {
-      console.log(error.message);
-      return error.message;
+      console.error("Error in destroy:", error.message);
+      throw error; 
     }
   }
 }
 
-const usersManager = new UserManager("./data/fs/files/users.json");
+const usersManager = new UserManager("./src/data/fs/files/users.json");
 export default usersManager;

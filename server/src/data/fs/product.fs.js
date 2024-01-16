@@ -19,24 +19,20 @@ class ProductManager {
   }
   async create(data) {
     try {
-      if (!data.title || !data.photo || !data.price || !data.stock) {
-        throw new Error("Title, Photo, Price, Stock are required");
-      } else {
-        const one = {
-          id: crypto.randomBytes(12).toString("hex"),
-          title: data.title,
-          photo: data.photo,
-          price: data.price,
-          stock: data.stock,
-        };
-        ProductManager.#products.push(one);
-        await fs.promises.writeFile(
-          this.path,
-          JSON.stringify(ProductManager.#products, null, 2)
-        );
-        console.log("Created ID:" + one.id);
-        return one;
-      }
+      const one = {
+        id: crypto.randomBytes(12).toString("hex"),
+        title: data.title,
+        photo: data.photo,
+        price: data.price,
+        stock: data.stock,
+      };
+      ProductManager.#products.push(one);
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(ProductManager.#products, null, 2)
+      );
+      console.log("Created ID:" + one.id);
+      return one;
     } catch (error) {
       console.log(error.message);
       return error.message;
@@ -64,7 +60,7 @@ class ProductManager {
       console.log(one);
       return one;
     } else {
-      return null;
+      return "Producto no encontrado";
     }
   }
 
@@ -88,7 +84,29 @@ class ProductManager {
       return error.message;
     }
   }
+
+  async update(quantity, pid) {
+    try {
+      const one = this.readOne(pid);
+      if (one) {
+        if (one.capacity >= quantity) {
+          one.capacity = one.capacity - quantity;
+          const jsonData = JSON.stringify(this.events, null, 2);
+          await fs.promises.writeFile(this.path, jsonData);
+          console.log("Capacity available " + one.capacity);
+          return one.capacity;
+        } else {
+          throw new Error("There aren't capacity");
+        }
+      } else {
+        throw new Error("There isn't any event");
+      }
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
+  }
 }
 
-const productsManager = new ProductManager("./data/fs/files/products.json");
+const productsManager = new ProductManager("./src/data/fs/files/products.json");
 export default productsManager;
