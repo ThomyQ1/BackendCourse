@@ -1,5 +1,3 @@
-console.log("socket");
-
 const socket = io();
 
 socket.on("products", (data) => {
@@ -41,5 +39,18 @@ document.querySelector("#newProduct").addEventListener("click", (event) => {
     alert(
       "Por favor, complete al menos un campo antes de agregar un nuevo producto."
     );
+  }
+});
+
+socket.on("new product", (newProduct) => {
+  if (window.location.pathname === "/real") {
+    const productHtml = `<div class="card" style="width: 18rem;">
+      <img src="${newProduct.photo}" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">${newProduct.title}</h5>
+      </div>
+    </div>`;
+
+    document.querySelector("#products").innerHTML += productHtml;
   }
 });

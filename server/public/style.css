@@ -25,26 +25,36 @@ nav {
   margin-bottom: 15px;
 }
 
-.card {
-  border-radius: 0px;
-  font-size: 14px;
-  box-shadow: 2px;
-}
-
-.custom-card {
+main {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50vh;
-  justify-content: center;
-  border: 1px solid #ccc;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
 }
 
-.custom-card img {
-  width: 100%;
+.card {
+  width: 18rem;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  overflow: hidden;
+}
+
+.card img {
+  max-width: 100%;
   height: auto;
 }
 
-.custom-card .datos {
-  padding: 15px;
+.card-body {
+  padding: 20px;
+}
+
+.btn-primary {
+  display: block;
+  margin-top: 10px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
 }

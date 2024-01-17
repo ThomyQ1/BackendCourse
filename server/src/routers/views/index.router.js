@@ -1,6 +1,7 @@
 import { Router } from "express";
 import productsRouter from "./products.router.js";
 import usersRouter from "./users.router.js";
+import formRouter from "./forms.router.js";
 
 const viewsRouter = Router();
 
@@ -11,6 +12,9 @@ viewsRouter.get("/", (req, res, next) => {
     next(error);
   }
 });
-viewsRouter.use("/products", productsRouter);
-viewsRouter.use("/register", usersRouter)
+
+viewsRouter.use("/real", productsRouter);
+viewsRouter.use("/register", usersRouter);
+viewsRouter.use("/form", formRouter);
+
 export default viewsRouter;

@@ -11,12 +11,5 @@ productsRouter.get("/", async (req, res, next) => {
     next(error);
   }
 });
-productsRouter.get("/form", async (req,res,next)=>{
-    try {
-        return res.render("form")
-    } catch (error) {
-        next(error)
-    }
-})
 
 export default productsRouter;

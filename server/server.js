@@ -22,7 +22,7 @@ socketServer.on("connection", (socket) => {
     try {
       console.log(data);
       await productsManager.create(data);
-      socket.emit("products", productsManager.read());
+      socketServer.emit("products", productsManager.read());
     } catch (error) {
       console.log(error);
     }
