@@ -1,44 +1,37 @@
 [
   {
-    "id": "0c03fb4c087351174d632820",
-    "title": "Skate Star Wars Rebelion",
-    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/alyxw001871-f2580306da3be164e716696556932471-640-0.jpg",
-    "price": 130,
-    "stock": 15
+    "id": "1972b3fa1ec91bc605ebd7a6",
+    "title": "Remera Est. 1992",
+    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/21147002b1-3dda0b0732ff2435c616938544059234-1024-1024.webp",
+    "price": 22000,
+    "stock": 100
   },
   {
-    "id": "3476d08f48b62ce6ef39c7a9",
-    "title": "Skate Element Hiero",
-    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/alyxw00142-11-e4b88e43de6eed3cbf16327743652247-640-0.jpg",
-    "price": 100,
-    "stock": 15
+    "id": "9d6f01e6640b95f6211cd028",
+    "title": "Musculosa Era 92",
+    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/21137507b-31-9019f3e351d02196fb16721517926546-1024-1024.webp",
+    "price": 22000,
+    "stock": 500
   },
   {
-    "id": "7deed92456dca929caff51f2",
-    "title": "Remera From the Dirt",
-    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/21147001j1-2b2fd1da849fa72de616938549135739-1024-1024.webp",
-    "price": 25,
-    "stock": 50
-  },
-  {
-    "id": "e10b56f313ce33e564cbdab3",
-    "title": "Remera Original 92 Oversize",
-    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/seba11-c5b78518c9a77c548216946304729562-1024-1024.webp",
-    "price": 25,
-    "stock": 50
-  },
-  {
-    "id": "786c62ac170cf9587f7cc544",
+    "id": "221deb95ce528a1751aec686",
     "title": "Bermuda Big Chino",
     "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/21147701-j-21-bff923ec5022a1a84b16940419609787-1024-1024.webp",
-    "price": 46,
+    "price": 46000,
+    "stock": 35
+  },
+  {
+    "id": "b2f50f8afae4e13d27db5677",
+    "title": "Bermuda Howland",
+    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/mewalhow61-69a06e69804181da0d16940439504765-640-0.jpg",
+    "price": 46000,
     "stock": 50
   },
   {
-    "id": "3cda9dc38d5eb8aa5fc93ca5",
-    "title": "Bermuda Vacation Roll Up",
-    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/mewalvac-a-11-b2a32396601c49b7db16940459372332-1024-1024.webp",
-    "price": 40,
-    "stock": 50
+    "id": "0cc32faa02b3cc7d06d3b12e",
+    "title": "Skate Completo Section 8.25\"",
+    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/alyxw00174-1-11-b45f0cd570c06123e516457489924958-640-0.jpg",
+    "price": "140000",
+    "stock": "10"
   }
 ]

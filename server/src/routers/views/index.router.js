@@ -6,13 +6,11 @@ const viewsRouter = Router();
 
 viewsRouter.get("/", (req, res, next) => {
   try {
-    return res.render("index");
+    return res.render("index", {});
   } catch (error) {
     next(error);
   }
 });
-
 viewsRouter.use("/products", productsRouter);
-viewsRouter.use("/users", usersRouter);
-
+viewsRouter.use("/register", usersRouter)
 export default viewsRouter;
