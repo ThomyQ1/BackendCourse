@@ -1,5 +1,7 @@
 import express from "express";
 import router from "./src/routers/index.router.js";
+import usersManager from "./src/data/fs/user.fs.js";
+import productsManager from "./src/data/fs/product.fs.js";
 import errorHandler from "./src/middlewares/errorHandler.mid.js";
 import pathHandler from "./src/middlewares/pathHandler.mid.js";
 import __dirname from "./utils.js";
@@ -8,6 +10,7 @@ import { engine } from "express-handlebars";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import productsManager from "./src/data/fs/product.fs.js";
+
 
 const server = express();
 const PORT = 8080;
@@ -32,6 +35,8 @@ socketServer.on("connection", (socket) => {
 server.engine("handlebars", engine());
 server.set("view engine", "handlebars");
 server.set("views", __dirname + "/src/views");
+
+server.listen(PORT, ready);
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
