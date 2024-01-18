@@ -1,0 +1,42 @@
+<main class="flex-grow-1 d-flex w-100 flex-wrap justify-content-evenly">
+  <form
+    style="max-width: 360px;"
+    class="w-100 d-flex flex-column justify-content-center items-align-center"
+  >
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        aria-describedby="emailHelp"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="photo" class="form-label">Photo</label>
+      <input type="text" class="form-control" id="photo" />
+    </div>
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input type="number" class="form-control" id="price" />
+    </div>
+    <div class="mb-3">
+      <label for="stock" class="form-label">Stock</label>
+      <input type="number" class="form-control" id="stock" />
+    </div>
+    <button
+      id="newProduct"
+      type="button"
+      class="btn btn-primary"
+    >Create</button>
+  </form>
+  <section
+    class="w-50 mb-4 d-flex flex-column justify-content-start align-items-center"
+    style="min-width: 380px"
+  >
+    <h6 class="mt-5 mb-2 text-center">Products</h6>
+    <article id="products" class="d-flex flex-wrap"></article>
+  </section>
+</main>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/real.js"></script>

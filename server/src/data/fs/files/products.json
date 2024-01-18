@@ -1,6 +1,18 @@
 [
   {
     "id": "1972b3fa1ec91bc605ebd7a6",
+
+    "title": "Remera Est. 1992",
+    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/21147002b1-3dda0b0732ff2435c616938544059234-1024-1024.webp",
+    "price": 22000,
+    "stock": 100
+  },
+  {
+    "id": "9d6f01e6640b95f6211cd028",
+    "title": "Musculosa Era 92",
+    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/21137507b-31-9019f3e351d02196fb16721517926546-1024-1024.webp",
+    "price": 22000,
+
     "title": "Jabon Lux",
     "photo": "jabonlux.jpg",
     "price": 50,
@@ -15,6 +27,40 @@
   },
   {
     "id": "221deb95ce528a1751aec686",
+
+    "title": "Bermuda Big Chino",
+    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/21147701-j-21-bff923ec5022a1a84b16940419609787-1024-1024.webp",
+    "price": 46000,
+    "stock": 35
+  },
+  {
+    "id": "b2f50f8afae4e13d27db5677",
+    "title": "Bermuda Howland",
+    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/mewalhow61-69a06e69804181da0d16940439504765-640-0.jpg",
+    "price": 46000,
+    "stock": 50
+  },
+  {
+    "id": "0cc32faa02b3cc7d06d3b12e",
+    "title": "Skate Completo Section 8.25\"",
+    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/alyxw00174-1-11-b45f0cd570c06123e516457489924958-640-0.jpg",
+    "price": "140000",
+    "stock": "10"
+  },
+  {
+    "id": "4d8ecc90a5784bc47a5e635a",
+    "title": "Gorra Hill Truckers",
+    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/elyha00183-m-3-4ca3215970976622e417047361464818-640-0.jpg",
+    "price": "21600",
+    "stock": "100"
+  },
+  {
+    "id": "8dc166f5b10da01ffde4d6d5",
+    "title": "Remera Natural Wonders",
+    "photo": "https://acdn.mitiendanube.com/stores/001/168/383/products/21147007-1-9f43bc3f14371cbb3f16989513139263-1024-1024.webp",
+    "price": "22000",
+    "stock": "50"
+
     "title": "Levite de pera",
     "photo": "peralevite.jpg",
     "price": 120,

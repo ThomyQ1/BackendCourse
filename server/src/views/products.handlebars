@@ -1,0 +1,11 @@
+<div class="d-flex flex-wrap justify-content-evenly">
+{{#each products}}
+  <div class="card" style="width: 18rem;">
+    <img src="{{this.photo}}" class="card-img-top">
+    <div class="card-body">
+    <h5 class="card-title">{{this.title}}</h5>
+    <p class="card-text">{{this.price}}</p>
+    <a href="#" class="btn btn-primary">Ver producto</a>
+  </div>
+</div>
+{{/each}}
