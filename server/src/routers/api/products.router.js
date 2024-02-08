@@ -1,5 +1,5 @@
 import { Router } from "express";
-import productsManager from "../../data/fs/product.fs.js";
+import { products } from "../../data/mongo/manager.mongo.js";
 import propsProducts from "../../middlewares/propsProducts.mid.js";
 
 const productsRouter = Router();
@@ -7,7 +7,7 @@ const productsRouter = Router();
 productsRouter.post("/", propsProducts, async (req, res, next) => {
   try {
     const data = req.body;
-    const response = await productsManager.create(data);
+    const response = await products.create(data);
 
     return res.status(201).json({
       statusCode: 201,
@@ -20,7 +20,9 @@ productsRouter.post("/", propsProducts, async (req, res, next) => {
 });
 productsRouter.get("/", async (req, res, next) => {
   try {
-    const all = await productsManager.read();
+    const filter = { category: req.params.category };
+    const order = { order: req.query.order };
+    const all = await products.read({});
     if (Array.isArray(all)) {
       return res.json({
         statusCode: 200,
@@ -39,7 +41,7 @@ productsRouter.get("/", async (req, res, next) => {
 productsRouter.get("/:pid", async (req, res, next) => {
   try {
     const { pid } = req.params;
-    const one = await productsManager.readOne(pid);
+    const one = await products.readOne(pid);
 
     if (one === "Producto no encontrado") {
       return res.status(404).json({
@@ -59,7 +61,7 @@ productsRouter.get("/:pid", async (req, res, next) => {
 productsRouter.put("/:pid", async (req, res, next) => {
   try {
     const { pid, quantity } = req.params;
-    const response = await productsManager.update(quantity, pid);
+    const response = await products.update(quantity, pid);
     if (response) {
       return res.json({
         statusCode: 200,
@@ -73,7 +75,7 @@ productsRouter.put("/:pid", async (req, res, next) => {
 productsRouter.delete("/:pid", async (req, res, next) => {
   try {
     const { pid } = req.params;
-    const response = await productsManager.destroy(pid);
+    const response = await products.destroy(pid);
     if (response === "There'nt any products") {
       return res.json({
         statusCode: 404,

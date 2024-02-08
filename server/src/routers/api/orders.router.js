@@ -1,18 +1,31 @@
 import { Router } from "express";
-import ordersManager from "../../data/fs/orders.fs.js";
-import propsOrders from "../../middlewares/propsOrders.mid.js";
+import { orders } from "../../data/mongo/manager.mongo.js";
 
 const ordersRouter = Router();
 
-ordersRouter.post("/", propsOrders, async (req, res, next) => {
+ordersRouter.post("/", async (req, res, next) => {
   try {
     const data = req.body;
-    const response = await ordersManager.create(data);
-
-    return res.status(201).json({
+    const one = await orders.create(data);
+    return res.json({
       statusCode: 201,
-      message: "created",
-      response,
+      response: one,
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+ordersRouter.get("/", async (req, res, next) => {
+  try {
+    let filter = {};
+    if (req.query.user_id) {
+      filter = { user_id: req.query.user_id };
+    }
+    const all = await orders.read({ filter });
+    return res.json({
+      statusCode: 200,
+      response: all,
     });
   } catch (error) {
     return next(error);
@@ -22,19 +35,25 @@ ordersRouter.post("/", propsOrders, async (req, res, next) => {
 ordersRouter.get("/:oid", async (req, res, next) => {
   try {
     const { oid } = req.params;
-    const one = await ordersManager.readOne(oid);
+    const one = await orders.readOne(oid);
+    return res.json({
+      statusCode: 200,
+      response: one,
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
 
-    if (one === "No orders found for the user") {
-      return res.status(404).json({
-        statusCode: 404,
-        message: "Orden no encontrada",
-      });
-    } else {
-      return res.status(200).json({
-        statusCode: 200,
-        response: one,
-      });
-    }
+ordersRouter.put("/:oid", async (req, res, next) => {
+  try {
+    const { oid } = req.params;
+    const data = req.body;
+    const one = await orders.update(oid, data);
+    return res.json({
+      statusCode: 200,
+      response: one,
+    });
   } catch (error) {
     return next(error);
   }
@@ -60,4 +79,4 @@ ordersRouter.delete("/:oid", async (req, res, next) => {
   }
 });
 
-export default ordersRouter
+export default ordersRouter;

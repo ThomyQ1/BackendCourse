@@ -9,10 +9,15 @@ import morgan from "morgan";
 import { engine } from "express-handlebars";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import "dotenv/config.js";
+import dbConnection from "./src/utils/db.js";
 
 const server = express();
 const PORT = 8080;
-const ready = () => console.log("Servidor listo en el puerto: " + PORT);
+const ready = () => {
+  console.log("Servidor listo en el puerto: " + PORT);
+  dbConnection();
+};
 const httpServer = createServer(server);
 const socketServer = new Server(httpServer);
 
