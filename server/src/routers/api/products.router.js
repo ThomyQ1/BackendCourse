@@ -18,26 +18,21 @@ productsRouter.post("/", propsProducts, async (req, res, next) => {
     return next(error);
   }
 });
+
 productsRouter.get("/", async (req, res, next) => {
   try {
     const filter = { category: req.params.category };
     const order = { order: req.query.order };
     const all = await products.read({});
-    if (Array.isArray(all)) {
-      return res.json({
-        statusCode: 200,
-        response: all,
-      });
-    } else {
-      return res.json({
-        statusCode: 404,
-        message: all,
-      });
-    }
+    return res.json({
+      statusCode: 200,
+      response: all || [],
+    });
   } catch (error) {
     return next(error);
   }
 });
+
 productsRouter.get("/:pid", async (req, res, next) => {
   try {
     const { pid } = req.params;

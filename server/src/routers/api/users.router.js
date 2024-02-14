@@ -33,30 +33,35 @@ usersRouter.get("/", async (req, res, next) => {
     const orderAndPaginate = {
       limit: req.query.limit || 10,
       page: req.query.page || 1,
+      sort: {},
     };
+
     const filter = {};
     if (req.query.email) {
       filter.email = new RegExp(req.query.email.trim(), "i");
     }
-    if (req.query.email === "desc") {
-      orderAndPaginate.sort.name = 1;
-    } else {
+
+    if (req.query.order === "desc") {
       orderAndPaginate.sort.name = -1;
+    } else {
+      orderAndPaginate.sort.name = 1;
     }
-    const all = await users.read({ filter, orderAndPaginate });
-    if (Array.isArray(all) && all.length > 0) {
+
+    const all = await users.read(filter, orderAndPaginate);
+
+    if (Array.isArray(all.docs) && all.docs.length > 0) {
       return res.json({
         statusCode: 200,
         response: {
-          message: "Users found",
-          users: all,
+          message: "Usuarios encontrados",
+          users: all.docs,
         },
       });
     } else {
       return res.status(404).json({
         statusCode: 404,
         response: {
-          message: "No users found",
+          message: "No se encontraron usuarios",
         },
       });
     }

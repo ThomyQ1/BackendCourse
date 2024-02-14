@@ -16,22 +16,6 @@ ordersRouter.post("/", async (req, res, next) => {
   }
 });
 
-ordersRouter.get("/", async (req, res, next) => {
-  try {
-    let filter = {};
-    if (req.query.user_id) {
-      filter = { user_id: req.query.user_id };
-    }
-    const all = await orders.read({ filter });
-    return res.json({
-      statusCode: 200,
-      response: all,
-    });
-  } catch (error) {
-    return next(error);
-  }
-});
-
 ordersRouter.get("/bills/:uid", async (req, res, next) => {
   try {
     const { uid } = req.params;
@@ -45,13 +29,16 @@ ordersRouter.get("/bills/:uid", async (req, res, next) => {
   }
 });
 
-ordersRouter.get("/:oid", async (req, res, next) => {
+ordersRouter.get("/", async (req, res, next) => {
   try {
-    const { oid } = req.params;
-    const one = await orders.readOne(oid);
+    const filter = {};
+    if (req.query.user_id) {
+      filter.user_id = req.query.user_id;
+    }
+    const all = await orders.read({ filter });
     return res.json({
       statusCode: 200,
-      response: one,
+      response: all,
     });
   } catch (error) {
     return next(error);
@@ -75,18 +62,11 @@ ordersRouter.put("/:oid", async (req, res, next) => {
 ordersRouter.delete("/:oid", async (req, res, next) => {
   try {
     const { oid } = req.params;
-    const response = await ordersManager.destroy(oid);
-    if (response === "There aren't any orders") {
-      return res.json({
-        statusCode: 404,
-        message: response,
-      });
-    } else {
-      return res.json({
-        statusCode: 200,
-        response: "Destroyed ID:" + oid,
-      });
-    }
+    const one = await orders.destroy(oid);
+    return res.json({
+      statusCode: 200,
+      response: one,
+    });
   } catch (error) {
     return next(error);
   }

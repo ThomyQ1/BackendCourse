@@ -16,11 +16,12 @@ class MongoManager {
       throw error;
     }
   }
-  async read(filter, orderAndPaginate) {
+  async read({ filter, options }) {
     try {
-      const all = await this.model.paginate(filter, orderAndPaginate);
-      if (all.totalPages === 0) {
-        const error = new Error("There'nt any documents");
+      options = { ...options, lean: true };
+      const all = await this.model.paginate(filter, options);
+      if (all.totalDocs === 0) {
+        const error = new Error("There aren't any document");
         error.statusCode = 404;
         throw error;
       }
@@ -53,10 +54,11 @@ class MongoManager {
         { $group: { _id: "$user_id", total: { $sum: "$subtotal" } } },
         {
           $project: {
-            _id: 0,
+            _id: false,
             user_id: "$_id",
             total: "$total",
             date: new Date(),
+            currency: "ARS",
           },
         },
       ]);
@@ -99,6 +101,7 @@ class MongoManager {
   async stats({ filter }) {
     try {
       let stats = await this.model.find(filter).explain("executionStats");
+      console.log(stats);
       stats = {
         quantity: stats.executionStats.nReturned,
         time: stats.executionStats.executionTimeMillis,
