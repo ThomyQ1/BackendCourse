@@ -1,32 +1,26 @@
 [
   {
     "id": "72371600e396dc69af964a2c",
-    "name": "ivan",
-    "photo": "ivan.jpg",
-    "email": "prueba1@gmail.com"
+    "name": "Ivan Zapata",
+    "photo": "https://images.squarespace-cdn.com/content/v1/563b99a2e4b024cc2d8d0510/1583184925522-ZYOD055BTNZ37EKSPF2V/Rudd%2BAdams%2BMasonry%2BTed%2BSmall.jpg",
+    "email": "ZapataIsmaelIvan@gmail.com"
   },
   {
     "id": "020c5bbea5ce2d4eb90a7a07",
-    "name": "jose",
-    "photo": "jose.jpg",
-    "email": "prueba2@gmail.com"
+    "name": "Jose Leon Armando",
+    "photo": "https://images.squarespace-cdn.com/content/v1/563b99a2e4b024cc2d8d0510/1583184925522-ZYOD055BTNZ37EKSPF2V/Rudd%2BAdams%2BMasonry%2BTed%2BSmall.jpg",
+    "email": "JoseLeonArmando@gmail.com"
   },
   {
     "id": "295173dd773a91220994e6cf",
-    "name": "thomy",
-    "photo": "martin.jpg",
-    "email": "prueba3@gmail.com"
+    "name": "Tomas Larazzi",
+    "photo": "https://images.squarespace-cdn.com/content/v1/563b99a2e4b024cc2d8d0510/1583184925522-ZYOD055BTNZ37EKSPF2V/Rudd%2BAdams%2BMasonry%2BTed%2BSmall.jpg",
+    "email": "LarazziTomas21@outlook.com"
   },
   {
     "id": "daeb622dc07da2f9737ffcc1",
-    "name": "thomas",
-    "photo": "thomas.jpg",
-    "email": "emaildethomas@gmail.com"
-  },
-  {
-    "id": "5f426a97363a44aa822d6ee9",
-    "name": "juan",
-    "photo": "juan.jpg",
-    "email": "juan@gmail.com"
+    "name": "Marco Quevedo",
+    "photo": "https://images.squarespace-cdn.com/content/v1/563b99a2e4b024cc2d8d0510/1583184925522-ZYOD055BTNZ37EKSPF2V/Rudd%2BAdams%2BMasonry%2BTed%2BSmall.jpg",
+    "email": "MarcoQuevedo505@gmail.com"
   }
 ]
