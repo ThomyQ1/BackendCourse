@@ -1,17 +1,18 @@
 import { Router } from "express";
 import { products } from "../../data/mongo/manager.mongo.js";
 import propsProducts from "../../middlewares/propsProducts.mid.js";
+import isAdminMid from "../../middlewares/isAdmin.mid.js";
 
 const productsRouter = Router();
 
-productsRouter.post("/", propsProducts, async (req, res, next) => {
+productsRouter.post("/", isAdminMid, propsProducts, async (req, res, next) => {
   try {
     const data = req.body;
     const response = await products.create(data);
 
     return res.status(201).json({
       statusCode: 201,
-      message: "created",
+      message: "Created",
       response,
     });
   } catch (error) {

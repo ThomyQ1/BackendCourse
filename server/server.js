@@ -11,6 +11,10 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import "dotenv/config.js";
 import dbConnection from "./src/utils/db.js";
+import cookieParser from "cookie-parser";
+import expressSession from "express-session";
+import sessionFileStore from "session-file-store";
+import MongoStore from "connect-mongo";
 
 const server = express();
 const PORT = 8080;
@@ -22,6 +26,32 @@ const httpServer = createServer(server);
 const socketServer = new Server(httpServer);
 
 // Configuración de middlewares y rutas
+const FileStore = sessionFileStore(expressSession);
+server.use(cookieParser(process.env.SECRET_KEY));
+/*server.use(
+  expressSession({
+    secret: process.env.SECRET_KEY,
+    resave: true,
+    saveUninitialized: true,
+    store: new FileStore({
+      path: "./src/data/fs/files/sessions",
+      ttl: 10,
+      retries: 2,
+    }),
+  })
+);*/
+
+server.use(
+  expressSession({
+    secret: process.env.SECRET_KEY,
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({
+      ttl: 7 * 24 * 60 * 60,
+      mongoUrl: process.env.DB_LINK,
+    }),
+  })
+);
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(express.static(__dirname + "/public"));
