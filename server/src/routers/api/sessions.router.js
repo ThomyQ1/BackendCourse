@@ -1,42 +1,71 @@
 import { Router } from "express";
 import { users } from "../../data/mongo/manager.mongo.js";
 import has8char from "../../middlewares/has8char.mid.js";
-import isValidPass from "../../middlewares/isValidPass.mid.js";
+import passport from "../../middlewares/passport.mid.js";
 
 const sessionsRouter = Router();
 
-sessionsRouter.post("/register", has8char, async (req, res, next) => {
-  try {
-    const data = req.body;
-    const one = await users.create(data);
-    return res.json({
-      statusCode: 201,
-      response: "Registered",
-    });
-  } catch (error) {
-    return next(error);
+sessionsRouter.post(
+  "/register",
+  has8char,
+  passport.authenticate("register", {
+    session: false,
+    failureRedirect: "/api/sessions/badauth",
+  }),
+  async (req, res, next) => {
+    try {
+      return res.json({
+        statusCode: 201,
+        message: "Registered!",
+      });
+    } catch (error) {
+      return next(error);
+    }
   }
-});
+);
 
-sessionsRouter.post("/login", isValidPass, async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-    if (email && password === "hola1234") {
-      req.session.email = email;
-      req.session.role = "user";
+sessionsRouter.post(
+  "/login",
+  passport.authenticate("login", {
+    session: false,
+    failureRedirect: "/api/sessions/badauth",
+  }),
+  async (req, res, next) => {
+    try {
       return res.json({
         statusCode: 200,
         message: "Logged in!",
         session: req.session,
       });
+    } catch (error) {
+      return next(error);
     }
-    const error = new Error("Bad Auth");
-    error.statusCode = 401;
-    throw error;
-  } catch (error) {
-    return next(error);
   }
-});
+);
+
+sessionsRouter.post(
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+sessionsRouter.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    session: false,
+    failureRedirect: "/api/sessions/badauth",
+  }),
+  async (req, res, next) => {
+    try {
+      return res.json({
+        statusCode: 200,
+        message: "Logged in with google!",
+        session: req.session,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
 
 sessionsRouter.post("/", async (req, res, next) => {
   try {
@@ -68,6 +97,17 @@ sessionsRouter.post("/signout", async (req, res, next) => {
       error.statusCode = 400;
       throw error;
     }
+  } catch (error) {
+    return next(error);
+  }
+});
+
+sessionsRouter.get("/badauth", (req, res, next) => {
+  try {
+    return res.json({
+      statusCode: 401,
+      message: "Bad auth",
+    });
   } catch (error) {
     return next(error);
   }
