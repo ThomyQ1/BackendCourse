@@ -35,7 +35,7 @@ sessionsRouter.post(
       return res.json({
         statusCode: 200,
         message: "Logged in!",
-        session: req.session,
+        token: req.token,
       });
     } catch (error) {
       return next(error);

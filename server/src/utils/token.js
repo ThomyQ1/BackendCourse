@@ -8,7 +8,7 @@ function createToken(data) {
 function verifyToken(headers) {
   const token = headers.token;
   if (token) {
-    const data = jwt.verify(token);
+    const data = jwt.verify(token, process.env.SECRET);
     return data;
   }
   const error = new Error("Bad auth");
