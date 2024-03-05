@@ -1,12 +1,13 @@
 import jwt from "jsonwebtoken";
 
 function createToken(data) {
-  const token = jwt.sign(data, process.env.SECRET, { expiresIn: 60 * 60 * 24 });
+  const token = jwt.sign(data, process.env.SECRET, {
+    expiresIn: 60 * 60 * 24 * 7,
+  });
   return token;
 }
 
-function verifyToken(headers) {
-  const token = headers.token;
+function verifyToken(token) {
   if (token) {
     const data = jwt.verify(token, process.env.SECRET);
     return data;

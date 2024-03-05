@@ -22,7 +22,7 @@ selector.addEventListener("click", async () => {
     console.log(response);
     response.statusCode === 201
       ? location.replace("/sessions/login")
-      : alert("ERROR: " + response.message);
+      : alert("error: " + response.message);
   } catch (error) {
     alert(error.message);
   }

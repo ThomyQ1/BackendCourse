@@ -1,16 +1,20 @@
 import { Router } from "express";
+
 import { products } from "../../data/mongo/manager.mongo.js";
-import sessionsRouter from "./sessions.router.js";
+
 import productsRouter from "./products.router.js";
+import sessionsRouter from "./sessions.router.js";
+import ordersRouter from "./orders.router.js";
 
 const viewsRouter = Router();
 
 viewsRouter.get("/", async (req, res, next) => {
   try {
     const options = {
-      limit: req.query.limit || 4,
+      limit: req.query.limit || 2,
       page: req.query.page || 1,
       sort: { title: 1 },
+      lean: true,
     };
     const filter = {};
     if (req.query.title) {
@@ -31,7 +35,11 @@ viewsRouter.get("/", async (req, res, next) => {
     next(error);
   }
 });
+
 viewsRouter.use("/products", productsRouter);
+
+viewsRouter.use("/orders", ordersRouter);
+
 viewsRouter.use("/sessions", sessionsRouter);
 
 export default viewsRouter;
