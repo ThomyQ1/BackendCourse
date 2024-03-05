@@ -1,10 +1,10 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { createHash, verifyHash } from "../utils/hash.js";
 import { users } from "../data/mongo/manager.mongo.js";
-const { GOOGLE_ID, GOOGLE_CLIENT } = process.env;
 import { createToken } from "../utils/token.js";
+import { Strategy as GoogleStrategy } from "passport-google-oauth2";
+const { GOOGLE_ID, GOOGLE_CLIENT } = process.env;
 
 passport.use(
   "register",
@@ -55,34 +55,62 @@ passport.use(
       passReqToCallback: true,
       clientID: GOOGLE_ID,
       clientSecret: GOOGLE_CLIENT,
-      scope: ["profile", "email"],
       callbackURL: "http://localhost:8080/api/sessions/google/callback",
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
         console.log(profile);
-        let user = await users.readByEmail(profile.id);
-        if (user) {
-          req.session.email = user.email;
-          req.session.role = user.role;
-          return done(null, user);
-        } else {
+        let user = await users.readByEmail(profile.id + "@gmail.com");
+        if (!user) {
           user = {
-            email: profile.id,
+            email: profile.id + "@gmail.com",
             name: profile.name.givenName,
             lastName: profile.name.familyName,
-            photo: profile.photos[0].value,
+            photo: profile.coverPhoto,
             password: createHash(profile.id),
           };
           user = await users.create(user);
-          req.session.email = user.email;
-          req.session.role = user.role;
-          return done(null, user);
         }
+        req.session.email = user.email;
+        req.session.role = user.role;
+        return done(null, user);
       } catch (error) {
         return done(error);
       }
     }
   )
 );
+passport.use(
+  "google",
+  new GoogleStrategy(
+    {
+      passReqToCallback: true,
+      clientID: GOOGLE_ID,
+      clientSecret: GOOGLE_CLIENT,
+      callbackURL: "http://localhost:8080/api/sessions/google/callback",
+    },
+    async (req, accessToken, refreshToken, profile, done) => {
+      try {
+        console.log(profile);
+        let user = await users.readByEmail(profile.id + "@gmail.com");
+        if (!user) {
+          user = {
+            email: profile.id + "@gmail.com",
+            name: profile.name.givenName,
+            lastName: profile.name.familyName,
+            photo: profile.coverPhoto,
+            password: createHash(profile.id),
+          };
+          user = await users.create(user);
+        }
+        req.session.email = user.email;
+        req.session.role = user.role;
+        return done(null, user);
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
+);
+
 export default passport;

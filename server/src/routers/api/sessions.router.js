@@ -58,7 +58,7 @@ sessionsRouter.get(
     try {
       return res.json({
         statusCode: 200,
-        message: "Logged in with google!",
+        message: "Sesion iniciada con google!",
         session: req.session,
       });
     } catch (error) {

@@ -3,8 +3,10 @@
     style="max-width: 360px;"
     class="w-100 d-flex flex-column justify-content-center items-align-center"
   >
+    <h5 class="text-center mb-4">Crea tu producto</h5>
+
     <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
+      <label for="title" class="form-label">Título</label>
       <input
         type="text"
         class="form-control"
@@ -13,30 +15,22 @@
       />
     </div>
     <div class="mb-3">
-      <label for="photo" class="form-label">Photo</label>
+      <label for="photo" class="form-label">Foto</label>
       <input type="text" class="form-control" id="photo" />
     </div>
     <div class="mb-3">
-      <label for="price" class="form-label">Price</label>
+      <label for="price" class="form-label">Precio</label>
       <input type="number" class="form-control" id="price" />
     </div>
     <div class="mb-3">
-      <label for="stock" class="form-label">Stock</label>
+      <label for="stock" class="form-label">Inventario</label>
       <input type="number" class="form-control" id="stock" />
     </div>
     <button
       id="newProduct"
       type="button"
-      class="btn btn-primary"
-    >Create</button>
+      class="w-100 btn btn-danger mt-3"
+    >Crear</button>
   </form>
-  <section
-    class="w-50 mb-4 d-flex flex-column justify-content-start align-items-center"
-    style="min-width: 380px"
-  >
-    <h6 class="mt-5 mb-2 text-center">Products</h6>
-    <article id="products" class="d-flex flex-wrap"></article>
-  </section>
 </main>
-<script src="/socket.io/socket.io.js"></script>
-<script src="/real.js"></script>
+<script src="/scripts/real.js"></script>

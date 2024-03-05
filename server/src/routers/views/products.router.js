@@ -1,12 +1,29 @@
 import { Router } from "express";
-import productsManager from "../../data/fs/product.fs.js";
+import { products } from "../../data/mongo/manager.mongo.js";
 
 const productsRouter = Router();
 
-productsRouter.get("/", async (req, res, next) => {
+productsRouter.get("/real", (req, res, next) => {
   try {
-    const all = await productsManager.read;
-    return res.render("products", { products: all });
+    return res.render("real", { title: "REAL" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+productsRouter.get("/form", async (req, res, next) => {
+  try {
+    return res.render("form");
+  } catch (error) {
+    next(error);
+  }
+});
+
+productsRouter.get("/:eid", async (req, res, next) => {
+  try {
+    const { eid } = req.params;
+    const one = await products.readOne(eid);
+    return res.render("detail", { event: one });
   } catch (error) {
     next(error);
   }

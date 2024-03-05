@@ -1,6 +1,6 @@
+import "dotenv/config.js";
 import express from "express";
 import router from "./src/routers/index.router.js";
-import usersManager from "./src/data/fs/user.fs.js";
 import productsManager from "./src/data/fs/product.fs.js";
 import errorHandler from "./src/middlewares/errorHandler.mid.js";
 import pathHandler from "./src/middlewares/pathHandler.mid.js";
@@ -9,13 +9,11 @@ import morgan from "morgan";
 import { engine } from "express-handlebars";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import "dotenv/config.js";
 import dbConnection from "./src/utils/db.js";
 import cookieParser from "cookie-parser";
 import expressSession from "express-session";
 import sessionFileStore from "session-file-store";
 import MongoStore from "connect-mongo";
-
 const server = express();
 const PORT = 8080;
 const ready = () => {
@@ -28,18 +26,6 @@ const socketServer = new Server(httpServer);
 // Configuración de middlewares y rutas
 const FileStore = sessionFileStore(expressSession);
 server.use(cookieParser(process.env.SECRET_KEY));
-/*server.use(
-  expressSession({
-    secret: process.env.SECRET_KEY,
-    resave: true,
-    saveUninitialized: true,
-    store: new FileStore({
-      path: "./src/data/fs/files/sessions",
-      ttl: 10,
-      retries: 2,
-    }),
-  })
-);*/
 
 server.use(
   expressSession({
