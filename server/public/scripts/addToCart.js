@@ -1,9 +1,9 @@
 const selectores = document.querySelectorAll(".addToCart");
 selectores.forEach((selector) => {
-  selector.addEventListener("click", async (event) => {
+  selector.addEventListener("click", async (product) => {
     try {
-      const productId = event.currentTarget.id;
-      const data = { product_id: products.target.id };
+      const productId = product.currentTarget.id;
+      const data = { product_id: product.target.id };
       const opts = {
         method: "POST",
         headers: { "Content-Type": "application/json" },

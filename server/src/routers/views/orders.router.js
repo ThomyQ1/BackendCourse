@@ -19,11 +19,11 @@ ordersRouter.get("/", passCallBack("jwt"), async (req, res, next) => {
       user_id: user._id,
     };
     const all = await orders.read({ filter, options });
-    console.log(all.docs[0].event_id);
-    return res.render("orders", { title: "Mi carrito", orders: all.docs });
+    console.log(all.docs[0].product_id);
+    return res.render("orders", { title: "ordenes", orders: all.docs });
   } catch (error) {
     return res.render("orders", {
-      title: "Mi carrito",
+      title: "ordenes",
       message: "No hay ordenes",
     });
   }
