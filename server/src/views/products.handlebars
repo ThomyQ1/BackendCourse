@@ -5,7 +5,8 @@
     <div class="card-body">
     <h5 class="card-title">{{this.title}}</h5>
     <p class="card-text">{{this.price}}</p>
-    <a href="#" class="btn btn-primary">Ver producto</a>
+    <input id="addToCart_{{this.product_id}}" class="addToCart btn btn-danger fs-5 m-1 me-3" type="button" value="Añadir al carrito">
   </div>
 </div>
 {{/each}}
+<script src="/scripts/cart.js"></script>

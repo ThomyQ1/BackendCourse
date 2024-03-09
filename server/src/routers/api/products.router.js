@@ -2,23 +2,30 @@ import { Router } from "express";
 import { products } from "../../data/mongo/manager.mongo.js";
 import propsProducts from "../../middlewares/propsProducts.mid.js";
 import isAdminMid from "../../middlewares/isAdmin.mid.js";
+import passport from "../../middlewares/passport.mid.js";
 
 const productsRouter = Router();
 
-productsRouter.post("/", isAdminMid, propsProducts, async (req, res, next) => {
-  try {
-    const data = req.body;
-    const response = await products.create(data);
+productsRouter.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  isAdminMid,
+  propsProducts,
+  async (req, res, next) => {
+    try {
+      const data = req.body;
+      const response = await products.create(data);
 
-    return res.status(201).json({
-      statusCode: 201,
-      message: "Created",
-      response,
-    });
-  } catch (error) {
-    return next(error);
+      return res.status(201).json({
+        statusCode: 201,
+        message: "Created",
+        response,
+      });
+    } catch (error) {
+      return next(error);
+    }
   }
-});
+);
 
 productsRouter.get("/", async (req, res, next) => {
   try {

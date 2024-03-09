@@ -1,0 +1,14 @@
+<div class="d-flex flex-wrap justify-content-evenly">
+  {{#each orders}}
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Orden ID: {{this._id}}</h5>
+        <p class="card-text">Usuario ID: {{this.user_id}}</p>
+        <p class="card-text">Producto ID: {{this.product_id}}</p>
+        <p class="card-text">Cantidad: {{this.quantity}}</p>
+        <p class="card-text">Estado: {{this.state}}</p>
+      </div>
+    </div>
+  {{/each}}
+</div>
+<script src="/scripts/orders.js"></script>

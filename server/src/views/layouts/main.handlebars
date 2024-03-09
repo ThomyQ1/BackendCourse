@@ -12,35 +12,50 @@
     <title>Index</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-md bg-danger w-100">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">For Skaters</a>
+        <a>Ecommmerce</a>
+        <a class="btn btn-danger fs-5 m-1 me-3" href="/">Home</a>
         <button
-          class="navbar-toggler"
+          class="navbar-toggler bg-light m-1"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/real">Real</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/form">Form</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/register">Register</a>
-            </li>
-          </ul>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a
+              class="btn btn-danger fs-5 m-1"
+              href="/products"
+              id="productsButton"
+            >Products</a>
+            <a
+              class="btn btn-danger fs-5 m-1"
+              href="/products/real"
+              id="formButton"
+            >Form</a>
+            <a
+              class="btn btn-danger fs-5 m-1"
+              href="/orders"
+              id="ordersButton"
+            >Orders</a>
+            <a
+              class="btn btn-danger fs-5 m-1"
+              href="/sessions/register"
+              id="registerButton"
+            >Register</a>
+            <a
+              class="btn btn-danger fs-5 m-1"
+              href="/sessions/login"
+              id="loginButton"
+            >Sign In</a>
+            <span class="btn btn-danger fs-5 m-1" id="signout">Sign out</span>
+          </div>
         </div>
       </div>
     </nav>
