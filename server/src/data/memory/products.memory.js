@@ -1,5 +1,4 @@
 import crypto from "crypto";
-import notFoundOne from "../../utils/notFoundOne.js";
 
 class ProductManager {
   #Products = [];
@@ -24,8 +23,7 @@ class ProductManager {
     }
   }
 
-  read({ filter, options }) {
-    // falta hacer el filtro y el paginate
+  read() {
     try {
       if (this.#Products.length === 0) {
         return { statusCode: 404, response: null };
@@ -50,29 +48,39 @@ class ProductManager {
     }
   }
 
-  // falta el readbyemail
-
-  async destroy(id) {
+  destroy(id) {
     try {
-      const one = this.readOne(id);
-      notFoundOne(one);
-      this.#Products = this.#Products.filter((each) => each.id !== id);
-      return one;
+      const index = this.#Products.findIndex((each) => each.id === id);
+      if (index !== -1) {
+        const deletedProduct = this.#Products.splice(index, 1);
+        return { statusCode: 200, response: deletedProduct[0] };
+      } else {
+        return { statusCode: 404, response: null };
+      }
     } catch (error) {
-      throw error;
+      return { statusCode: 500, response: null };
     }
   }
 
-  async update(pid, data) {
+  update(id, data) {
     try {
-      const one = this.readOne(pid);
-      notFoundOne(one);
-      for (let each in data) {
-        one[each] = data[each];
+      const index = this.#Products.findIndex((each) => each.id === id);
+
+      if (index !== -1) {
+        this.#Products[index] = {
+          id,
+          title: data.title !== undefined ? data.title : this.#Products[index].title,
+          photo: data.photo !== undefined ? data.photo : this.#Products[index].photo,
+          price: data.price !== undefined ? data.price : this.#Products[index].price,
+          stock: data.stock !== undefined ? data.stock : this.#Products[index].stock,
+        };
+
+        return { statusCode: 200, response: this.#Products[index] };
+      } else {
+        return { statusCode: 404, response: null };
       }
-      return one;
     } catch (error) {
-      throw error;
+      return { statusCode: 500, response: null };
     }
   }
 }
