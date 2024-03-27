@@ -1,5 +1,6 @@
 import fs from "fs";
-import crypto from "node:crypto";
+import crypto from "crypto";
+import notFoundOne from "../../utils/notFoundOne.js";
 
 class ProductManager {
   static #products = [];
@@ -39,10 +40,11 @@ class ProductManager {
     }
   }
 
-  read() {
+  read({ filter, options }) {
+    //aplicar paginacion y filtro
     try {
       if (ProductManager.#products.length === 0) {
-        throw new Error("There'nt any product");
+        throw new Error("There aren't any document");
       } else {
         console.log(ProductManager.#products);
         return ProductManager.#products;
@@ -55,55 +57,41 @@ class ProductManager {
 
   readOne(id) {
     const one = ProductManager.#products.find((each) => each.id === id);
-
     if (one) {
       console.log(one);
       return one;
     } else {
-      return "Producto no encontrado";
+      return "There aren't any document";
     }
   }
+
+  //aca va el readbyemail
 
   async destroy(id) {
     try {
-      const one = ProductManager.#products.find((each) => each.id === id);
-      if (one) {
-        ProductManager.#products = ProductManager.#products.filter(
-          (each) => each.id !== id
-        );
-        await fs.promises.writeFile(
-          this.path,
-          JSON.stringify(ProductManager.#products, null, 2)
-        );
-        console.log("Destroyed ID:" + id);
-      } else {
-        throw new Error("There'nt any products");
-      }
+      const one = this.readOne(id);
+      notFoundOne(one);
+      this.products = this.products.filter((each) => each._id !== id);
+      const jsonData = JSON.stringify(this.products, null, 2);
+      await fs.promises.writeFile(this.path, jsonData);
+      return one;
     } catch (error) {
-      console.log(error.message);
-      return error.message;
+      throw error;
     }
   }
 
-  async update(quantity, pid) {
+  async update(pid, data) {
     try {
       const one = this.readOne(pid);
-      if (one) {
-        if (one.capacity >= quantity) {
-          one.capacity = one.capacity - quantity;
-          const jsonData = JSON.stringify(this.events, null, 2);
-          await fs.promises.writeFile(this.path, jsonData);
-          console.log("Capacity available " + one.capacity);
-          return one.capacity;
-        } else {
-          throw new Error("There aren't capacity");
-        }
-      } else {
-        throw new Error("There isn't any event");
+      notFoundOne(one);
+      for (let each in data) {
+        one[each] = data[each];
       }
+      const jsonData = JSON.stringify(this.events, null, 2);
+      await fs.promises.writeFile(this.path, jsonData);
+      return one;
     } catch (error) {
-      console.log(error.message);
-      return error.message;
+      throw error;
     }
   }
 }
