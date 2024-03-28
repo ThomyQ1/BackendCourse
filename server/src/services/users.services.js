@@ -1,5 +1,5 @@
 import repository from "../repositories/users.repositories.js";
-import sendEmail from "../utils/sendEmail.utils.js";
+import sendEmail from "../utils/sendEmail.js";
 
 class UsersService {
   constructor() {

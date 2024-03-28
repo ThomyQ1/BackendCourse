@@ -36,7 +36,7 @@ class SessionsRouter extends CustomRouter {
       }),
       google
     );
-    this.read("/", ["PUBLIC"], passCallBackMid("jwt"), read);
+    this.create("/", verifyAccount);
     this.create("/signout", ["PUBLIC"], passCallBackMid("jwt"), signout);
     this.read("/badauth", badauth);
     this.read("/signout/cb", alreadysignedout);

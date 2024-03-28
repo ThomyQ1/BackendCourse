@@ -7,24 +7,6 @@ let dao = {};
 
 switch (enviroment) {
   case "test":
-    console.log("Memory Connected");
-    const { default: productsMemory } = await import(
-      "../data/memory/products.memory.js"
-    );
-    const { default: usersMemory } = await import(
-      "../data/memory/users.memory.js"
-    );
-    const { default: ordersMemory } = await import(
-      "../data/memory/orders.memory.js"
-    );
-    dao = {
-      products: productsMemory,
-      users: usersMemory,
-      orders: ordersMemory,
-    };
-    break;
-
-  case "dev":
     console.log("Fs Connected");
     const { default: productsFs } = await import("../data/fs/product.fs.js");
     const { default: usersFs } = await import("../data/fs/user.fs.js");
@@ -32,7 +14,7 @@ switch (enviroment) {
     dao = { products: productsFs, users: usersFs, orders: ordersFs };
     break;
 
-  default:
+  case "dev":
     console.log("Mongo Connected");
     const { default: productsMongo } = await import(
       "../data/mongo/products.mongo.js"
@@ -44,6 +26,9 @@ switch (enviroment) {
       "../data/mongo/orders.mongo.js"
     );
     dao = { products: productsMongo, users: usersMongo, orders: ordersMongo };
+    break;
+
+  default:
     break;
 }
 
