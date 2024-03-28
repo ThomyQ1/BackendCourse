@@ -1,5 +1,6 @@
 import fs from "fs";
-import crypto from "node:crypto";
+import crypto from "crypto";
+import notFoundOne from "../../utils/notFoundOne.js";
 
 class ProductManager {
   static #products = [];
@@ -19,33 +20,38 @@ class ProductManager {
   }
   async create(data) {
     try {
-      const one = {
-        id: crypto.randomBytes(12).toString("hex"),
-        title: data.title,
-        photo: data.photo,
-        price: data.price,
-        stock: data.stock,
-      };
-      ProductManager.#products.push(one);
+      ProductManager.#products.push(data);
       await fs.promises.writeFile(
         this.path,
         JSON.stringify(ProductManager.#products, null, 2)
       );
-      console.log("Created ID:" + one.id);
-      return one;
+      return data;
     } catch (error) {
       console.log(error.message);
       return error.message;
     }
   }
 
-  read() {
+  read({ filter, options }) {
     try {
-      if (ProductManager.#products.length === 0) {
-        throw new Error("There'nt any product");
+      let data = ProductManager.#products;
+      if (filter) {
+        data = data.filter((item) => {
+          return item.name === filter.name;
+        });
+      }
+      if (options) {
+        if (options.page && options.limit) {
+          const startIndex = (options.page - 1) * options.limit;
+          const endIndex = options.page * options.limit;
+          data = data.slice(startIndex, endIndex);
+        }
+      }
+      if (data.length === 0) {
+        throw new Error("Not Found");
       } else {
-        console.log(ProductManager.#products);
-        return ProductManager.#products;
+        console.log(data);
+        return data;
       }
     } catch (error) {
       console.log(error.message);
@@ -54,56 +60,39 @@ class ProductManager {
   }
 
   readOne(id) {
-    const one = ProductManager.#products.find((each) => each.id === id);
-
+    const one = ProductManager.#products.find((each) => each._id === id);
     if (one) {
-      console.log(one);
       return one;
     } else {
-      return "Producto no encontrado";
+      return "Not Found";
     }
   }
 
-  async destroy(id) {
-    try {
-      const one = ProductManager.#products.find((each) => each.id === id);
-      if (one) {
-        ProductManager.#products = ProductManager.#products.filter(
-          (each) => each.id !== id
-        );
-        await fs.promises.writeFile(
-          this.path,
-          JSON.stringify(ProductManager.#products, null, 2)
-        );
-        console.log("Destroyed ID:" + id);
-      } else {
-        throw new Error("There'nt any products");
-      }
-    } catch (error) {
-      console.log(error.message);
-      return error.message;
-    }
-  }
-
-  async update(quantity, pid) {
+  async update(pid, data) {
     try {
       const one = this.readOne(pid);
-      if (one) {
-        if (one.capacity >= quantity) {
-          one.capacity = one.capacity - quantity;
-          const jsonData = JSON.stringify(this.events, null, 2);
-          await fs.promises.writeFile(this.path, jsonData);
-          console.log("Capacity available " + one.capacity);
-          return one.capacity;
-        } else {
-          throw new Error("There aren't capacity");
-        }
-      } else {
-        throw new Error("There isn't any event");
+      notFoundOne(one);
+      products;
+      for (let each in data) {
+        one[each] = data[each];
       }
+      const jsonData = JSON.stringify(this.products, null, 2);
+      await fs.promises.writeFile(this.path, jsonData);
+      return one;
     } catch (error) {
-      console.log(error.message);
-      return error.message;
+      throw error;
+    }
+  }
+  async destroy(id) {
+    try {
+      const one = this.readOne(id);
+      notFoundOne(one);
+      this.products = this.products.filter((each) => each._id !== id);
+      const jsonData = JSON.stringify(this.products, null, 2);
+      await fs.promises.writeFile(this.path, jsonData);
+      return one;
+    } catch (error) {
+      throw error;
     }
   }
 }

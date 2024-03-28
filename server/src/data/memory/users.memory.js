@@ -1,4 +1,4 @@
-const crypto = require ("crypto")
+import crypto from "crypto";
 
 class UserManager {
   static #Users = [];
@@ -9,7 +9,7 @@ class UserManager {
         throw new Error("Name, Photo, Email are required");
       } else {
         const user = {
-          id:crypto.randomBytes(12).toString("hex"),
+          id: crypto.randomBytes(12).toString("hex"),
           name: data.name,
           photo: data.photo,
           email: data.email,
@@ -21,19 +21,30 @@ class UserManager {
       return error.message;
     }
   }
-  read() {
+  read({ filter, options }) {
     try {
-      const AllUsers = UserManager.#Users;
-      if (AllUsers.length === 0) {
-        throw new Error("There'nt Users");
+      let data = UserManager.#Users;
+      if (filter) {
+        data = data.filter((item) => {
+          return item.name === filter.name;
+        });
+      }
+      if (options) {
+        if (options.page && options.limit) {
+          const startIndex = (options.page - 1) * options.limit;
+          const endIndex = options.page * options.limit;
+          data = data.slice(startIndex, endIndex);
+        }
+      }
+      if (data.length === 0) {
+        return { statusCode: 404, response: null };
       } else {
-        return AllUsers;
+        return { statusCode: 200, response: data };
       }
     } catch (error) {
-      return error.message;
+      return { statusCode: 500, response: null };
     }
   }
-
   readOne(id) {
     try {
       const OneUser = UserManager.#Users.find((each) => each.id === id);
@@ -55,7 +66,7 @@ class UserManager {
           (each) => each.id !== id
         );
         console.log("Destroyed ID: " + id);
-        return id
+        return id;
       } else {
         throw new Error("There'nt user with ID" + id);
       }
@@ -67,4 +78,4 @@ class UserManager {
 }
 
 const user = new UserManager();
-export default user
+export default user;
