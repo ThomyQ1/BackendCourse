@@ -1,4 +1,7 @@
+import "dotenv/config.js";
+import dbConnection from "../utils/db.js";
 import args from "../utils/args.js";
+
 console.log(args);
 
 const enviroment = args.env;
@@ -15,6 +18,7 @@ switch (enviroment) {
     break;
 
   case "dev":
+    dbConnection();
     console.log("Mongo Connected");
     const { default: productsMongo } = await import(
       "../data/mongo/products.mongo.js"

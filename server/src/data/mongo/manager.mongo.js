@@ -1,6 +1,3 @@
-import User from "../mongo/models/user.model.js";
-import Product from "../mongo/models/product.model.js";
-import Order from "./models/order.model.js";
 import notFoundOne from "../../utils/notFoundOne.js";
 import { Types } from "mongoose";
 
