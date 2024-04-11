@@ -1,6 +1,6 @@
 import "dotenv/config.js";
-import dbConnection from "../utils/db.js";
 import args from "../utils/args.js";
+import dbConnection from "../utils/db.js";
 
 console.log(args);
 

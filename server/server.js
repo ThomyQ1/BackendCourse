@@ -15,6 +15,7 @@ import expressSession from "express-session";
 import sessionFileStore from "session-file-store";
 import MongoStore from "connect-mongo";
 import args from "./src/utils/args.js";
+import compression from "express-compression";
 
 const server = express();
 const PORT = env.PORT || 8080;
@@ -48,6 +49,11 @@ const router = new IndexRouter();
 server.use("/", router.getRouter());
 server.use(errorHandler);
 server.use(pathHandler);
+server.use(
+  compression({
+    brotli: { enabled: true, zlib: {} },
+  })
+);
 
 // Configuración de Socket.IO
 socketServer.on("connection", (socket) => {

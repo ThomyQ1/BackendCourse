@@ -20,7 +20,7 @@ export default class ProductsRouter extends CustomRouter {
     this.read("/", ["PUBLIC"], async (req, res, next) => {
       try {
         const options = {
-          limit: req.query.limit || 4,
+          limit: req.query.limit || 15,
           page: req.query.page || 1,
           sort: { title: 1 },
           lean: true,
