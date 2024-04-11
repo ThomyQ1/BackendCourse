@@ -1,5 +1,6 @@
 import CustomRouter from "../CustomRouter.js";
-import { orders, users } from "../../data/mongo/manager.mongo.js";
+import orders from "../../data/mongo/orders.mongo.js";
+import users from "../../data/mongo/users.mongo.js";
 import passCallBack from "../../middlewares/passCallBack.mid.js";
 
 export default class OrdersRouter extends CustomRouter {

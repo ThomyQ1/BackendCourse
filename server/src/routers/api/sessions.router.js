@@ -1,10 +1,11 @@
 import CustomRouter from "../CustomRouter.js";
 import {
-  create,
+  register,
   login,
   google,
   read,
   signout,
+  verifyAccount,
   badauth,
   alreadysignedout,
 } from "../../controllers/sessions.controllers.js";
@@ -19,7 +20,7 @@ class SessionsRouter extends CustomRouter {
       ["PUBLIC"],
       has8char,
       passCallBackMid("register"),
-      create
+      register
     );
     this.create("/login", ["PUBLIC"], passCallBackMid("login"), login);
     this.create(
@@ -35,7 +36,7 @@ class SessionsRouter extends CustomRouter {
       }),
       google
     );
-    this.read("/", ["PUBLIC"], passCallBackMid("jwt"), read);
+    this.create("/", verifyAccount);
     this.create("/signout", ["PUBLIC"], passCallBackMid("jwt"), signout);
     this.read("/badauth", badauth);
     this.read("/signout/cb", alreadysignedout);

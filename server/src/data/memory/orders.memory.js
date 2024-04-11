@@ -1,23 +1,23 @@
 import crypto from "crypto";
 import notFoundOne from "../../utils/notFoundOne.js";
 
-class ProductManager {
-  #Products = [];
+class OrderManager {
+  #Orders = [];
 
   create(data) {
     try {
-      if (!data.title || !data.photo || !data.price || !data.stock) {
+      if (!data.uid || !data.pid || !data.quantity) {
         return { statusCode: 400, response: null };
       } else {
-        const One = {
-          id: crypto.randomBytes(12).toString("hex"),
-          title: data.title,
-          photo: data.photo,
-          price: data.price,
-          stock: data.stock,
+        const newOrder = {
+          oid: crypto.randomBytes(12).toString("hex"),
+          uid: data.uid,
+          pid: data.pid,
+          quantity: data.quantity,
+          state: data.state || "pending",
         };
-        this.#Products.push(One);
-        return { statusCode: 201, response: One };
+        this.#Orders.push(newOrder);
+        return { statusCode: 201, response: newOrder };
       }
     } catch (error) {
       return { statusCode: 500, response: null };
@@ -26,7 +26,7 @@ class ProductManager {
 
   read({ filter, options }) {
     try {
-      let data = this.#Products;
+      let data = this.#Orders;
       if (filter) {
         data = data.filter((item) => {
           return item.name === filter.name;
@@ -48,12 +48,11 @@ class ProductManager {
       return { statusCode: 500, response: null };
     }
   }
-
-  readOne(id) {
+  readOne(oid) {
     try {
-      const oneProduct = this.#Products.find((each) => each.id === id);
-      if (oneProduct) {
-        return { statusCode: 200, response: oneProduct };
+      const order = this.#Orders.find((each) => each.oid === oid);
+      if (order) {
+        return { statusCode: 200, response: order };
       } else {
         return { statusCode: 404, response: null };
       }
@@ -62,30 +61,30 @@ class ProductManager {
     }
   }
 
-  async update(pid, data) {
+  async update(oid, data) {
     try {
-      const one = this.readOne(pid);
-      notFoundOne(one);
-      for (let each in data) {
-        one[each] = data[each];
+      const orderToUpdate = this.readOne(oid);
+      notFoundOne(orderToUpdate);
+      for (let key in data) {
+        orderToUpdate[key] = data[key];
       }
-      return one;
+      return orderToUpdate;
     } catch (error) {
       throw error;
     }
   }
 
-  async destroy(id) {
+  async destroy(oid) {
     try {
-      const one = this.readOne(id);
-      notFoundOne(one);
-      this.#Products = this.#Products.filter((each) => each.id !== id);
-      return one;
+      const orderToDelete = this.readOne(oid);
+      notFoundOne(orderToDelete);
+      this.#Orders = this.#Orders.filter((each) => each.oid !== oid);
+      return orderToDelete;
     } catch (error) {
       throw error;
     }
   }
 }
 
-const products = new ProductManager();
-export default products;
+const orders = new OrderManager();
+export default orders;

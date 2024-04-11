@@ -1,45 +1,20 @@
-import { users } from "../data/mongo/manager.mongo.js";
+import repository from "../repositories/users.repositories.js";
+import sendEmail from "../utils/sendEmail.js";
 
 class UsersService {
   constructor() {
-    this.model = users;
+    this.repository = repository;
   }
-  create = async (data) => {
+  create = async (data) => await this.repository.create(data);
+  read = async ({ filter, options }) =>
+    await this.repository.read({ filter, options });
+  readOne = async (id) => await this.repository.readOne(id);
+  readByEmail = async (email) => await this.repository.readByEmail(email);
+  update = async (id, data) => await this.repository.update(id, data);
+  destroy = async (id) => await this.repository.destroy(id);
+  register = async (data) => {
     try {
-      const response = await this.model.create(data);
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  };
-  read = async ({ options, filter }) => {
-    try {
-      const response = await this.model.read({ options, filter });
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  };
-  readOne = async (id) => {
-    try {
-      const response = await this.model.readOne(id);
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  };
-  update = async (id) => {
-    try {
-      const response = await this.model.update(id);
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  };
-  destroy = async (id) => {
-    try {
-      const response = await this.model.destroy(id);
-      return response;
+      await sendEmail(data);
     } catch (error) {
       throw error;
     }

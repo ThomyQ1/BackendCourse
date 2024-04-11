@@ -20,25 +20,11 @@ class OrdersManager {
 
   async create(data) {
     try {
-      if (!data.uid || !data.pid || !data.quantity) {
-        throw new Error("UID, PID, and Quantity are required fields");
-      }
-
-      const order = {
-        oid: crypto.randomBytes(12).toString("hex"),
-        uid: data.uid,
-        pid: data.pid,
-        quantity: data.quantity,
-        state: data.state || "pending",
-      };
-
       OrdersManager.#orders.push(order);
-
       await fs.promises.writeFile(
         this.path,
         JSON.stringify(OrdersManager.#orders, null, 2)
       );
-
       console.log("Created OID:" + order.oid);
       return order;
     } catch (error) {
@@ -47,17 +33,30 @@ class OrdersManager {
     }
   }
 
-  read() {
+  read({ filter, options }) {
     try {
-      if (OrdersManager.#orders.length === 0) {
-        throw new Error("There aren't any orders");
+      let data = OrdersManager.#orders;
+      if (filter) {
+        data = data.filter((item) => {
+          return item.name === filter.name;
+        });
+      }
+      if (options) {
+        if (options.page && options.limit) {
+          const startIndex = (options.page - 1) * options.limit;
+          const endIndex = options.page * options.limit;
+          data = data.slice(startIndex, endIndex);
+        }
+      }
+      if (data.length === 0) {
+        throw new Error("Not Found");
       } else {
-        console.log(OrdersManager.#orders);
-        return OrdersManager.#orders;
+        console.log(data);
+        return data;
       }
     } catch (error) {
-      console.error(error.message);
-      throw error;
+      console.log(error.message);
+      return error.message;
     }
   }
 
@@ -65,7 +64,6 @@ class OrdersManager {
     const userOrders = OrdersManager.#orders.filter(
       (order) => order.oid === oid
     );
-
     if (userOrders.length > 0) {
       console.log(userOrders);
       return userOrders;

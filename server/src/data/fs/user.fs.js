@@ -1,5 +1,5 @@
 import fs from "fs";
-import crypto from "node:crypto";
+import crypto from "crypto";
 
 class UserManager {
   static #users = [];
@@ -20,44 +20,48 @@ class UserManager {
 
   async create(data) {
     try {
-      if (!data.name || !data.photo || !data.email) {
-        throw new Error("Name, Photo, Email are required");
-      } else {
-        const user = {
-          id: crypto.randomBytes(12).toString("hex"),
-          name: data.name,
-          photo: data.photo,
-          email: data.email,
-        };
-        UserManager.#users.push(user);
-        await fs.promises.writeFile(
-          this.path,
-          JSON.stringify(UserManager.#users, null, 2)
-        );
-        console.log("Created Id: " + user.id);
-        return user.id;
-      }
+      UserManager.#users.push(user);
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(UserManager.#users, null, 2)
+      );
+      console.log("Created Id: " + user.id);
+      return user.id;
     } catch (error) {
       console.error("Error in create:", error.message);
       throw error;
     }
   }
 
-  read() {
-    return new Promise((resolve) => {
-      if (UserManager.#users.length === 0) {
-        console.log("There aren't any users");
-        resolve([]);
-      } else {
-        console.log(UserManager.#users);
-        resolve(UserManager.#users);
+  read({ filter, options }) {
+    try {
+      let data = UserManager.#users;
+      if (filter) {
+        data = data.filter((item) => {
+          return item.name === filter.name;
+        });
       }
-    });
+      if (options) {
+        if (options.page && options.limit) {
+          const startIndex = (options.page - 1) * options.limit;
+          const endIndex = options.page * options.limit;
+          data = data.slice(startIndex, endIndex);
+        }
+      }
+      if (data.length === 0) {
+        throw new Error("Not Found");
+      } else {
+        console.log(data);
+        return data;
+      }
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
   }
 
   readOne(id) {
-    const one = UserManager.#users.find((each) => each.id === id);
-
+    const one = UserManager.#users.find((each) => each._id === id);
     if (one) {
       console.log(one);
       return one;
@@ -69,7 +73,7 @@ class UserManager {
 
   async destroy(id) {
     try {
-      const one = UserManager.#users.find((each) => each.id === id);
+      const one = UserManager.#users.find((each) => each._id === id);
       if (one) {
         UserManager.#users = UserManager.#users.filter(
           (each) => each.id !== id
@@ -85,7 +89,7 @@ class UserManager {
       }
     } catch (error) {
       console.error("Error in destroy:", error.message);
-      throw error; 
+      throw error;
     }
   }
 }

@@ -1,6 +1,3 @@
-import User from "../mongo/models/user.model.js";
-import Product from "../mongo/models/product.model.js";
-import Order from "./models/order.model.js";
 import notFoundOne from "../../utils/notFoundOne.js";
 import { Types } from "mongoose";
 
@@ -21,7 +18,7 @@ class MongoManager {
       options = { ...options, lean: true };
       const all = await this.model.paginate(filter, options);
       if (all.totalDocs === 0) {
-        const error = new Error("There aren't any document");
+        const error = new Error("Not Found");
         error.statusCode = 404;
         throw error;
       }
@@ -122,8 +119,4 @@ class MongoManager {
   }
 }
 
-const users = new MongoManager(User);
-const products = new MongoManager(Product);
-const orders = new MongoManager(Order);
-
-export { users, products, orders };
+export default MongoManager;

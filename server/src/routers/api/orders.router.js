@@ -12,7 +12,7 @@ class OrdersRouter extends CustomRouter {
   init() {
     this.create("/", ["ADMIN", "PREMIUM"], passCallBackMid("jwt"), create);
     this.read("/bills/:uid", ["USER", "PREMIUM", "ADMIN"], report);
-    this.read("/", ["PUBLIC"], read);
+    this.read("/", ["ADMIN", "USER", "PREMIUM"], read);
     this.update("/:oid", ["ADMIN", "PREMIUM"], update);
     this.destroy("/:oid", ["ADMIN", "PREMIUM"], destroy);
   }

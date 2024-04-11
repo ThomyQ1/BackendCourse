@@ -1,5 +1,5 @@
 import CustomRouter from "../CustomRouter.js";
-import { products } from "../../data/mongo/manager.mongo.js";
+import products from "../../data/mongo/products.mongo.js";
 import passport from "passport";
 
 export default class ProductsRouter extends CustomRouter {

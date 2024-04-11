@@ -3,7 +3,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import { createHash, verifyHash } from "../utils/hash.js";
-import { users } from "../data/mongo/manager.mongo.js";
+import repository from "../repositories/users.repositories.js";
 import { createToken } from "../utils/token.js";
 const { GOOGLE_ID, GOOGLE_CLIENT, SECRET } = process.env;
 
@@ -13,17 +13,13 @@ passport.use(
     { passReqToCallback: true, usernameField: "email" },
     async (req, email, password, done) => {
       try {
-        let one = await users.readByEmail(email);
-        if (!one) {
-          let data = req.body;
-          data.password = createHash(password);
-          let user = await users.create(data);
-          return done(null, user);
+        let one = await repository.readByEmail(email);
+        if (one) {
+          return done(null, false, { statusCode: 401 });
         } else {
-          return done(null, false, {
-            messages: "Already exists",
-            statusCode: 400,
-          });
+          const user = await repository.create(req.body);
+          console.log(user);
+          return done(null, user);
         }
       } catch (error) {
         return done(error);
@@ -31,20 +27,19 @@ passport.use(
     }
   )
 );
-
 passport.use(
   "login",
   new LocalStrategy(
     { passReqToCallback: true, usernameField: "email" },
     async (req, email, password, done) => {
       try {
-        const user = await users.readByEmail(email);
-        if (user && verifyHash(password, user.password)) {
-          const token = createToken({ email, role: user.role });
-          req.token = token;
+        const user = await repository.readByEmail(email);
+        const verify = verifyHash(password, user.password);
+        if (user?.verified && verify) {
+          req.token = createToken({ _id: user._id, role: user.role });
           return done(null, user);
         } else {
-          return done(null, false, { messages: "Bad auth from passport cb" });
+          return done(null, false, { statusCode: 401 });
         }
       } catch (error) {
         return done(error);
