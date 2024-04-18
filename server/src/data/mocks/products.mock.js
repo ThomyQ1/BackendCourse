@@ -3,7 +3,10 @@ import dbConnection from "../../utils/db.js";
 import { faker } from "@faker-js/faker";
 import repository from "../../repositories/products.repositories.js";
 
-export default function ProductsMock() {
+console.log(process.env.DB_LINK);
+dbConnection();
+
+function productsMock() {
   return {
     title: faker.commerce.product(),
     photo: faker.image.urlLoremFlickr({ category: "fashion" }),
@@ -16,18 +19,14 @@ export default function ProductsMock() {
   };
 }
 
-async function CreateMocks() {
+async function createMocks() {
   try {
-    const data = ProductsMock();
-    dbConnection();
+    const data = productsMock();
     await repository.create(data);
-    console.log("Product created");
   } catch (error) {
     console.log(error);
   }
 }
 for (let i = 1; i <= 100; i++) {
-  CreateMocks();
+  createMocks();
 }
-
-//acordarme de arreglar el indexfactory, tira undefined el metodo create.
