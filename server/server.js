@@ -15,6 +15,8 @@ import expressSession from "express-session";
 import sessionFileStore from "session-file-store";
 import MongoStore from "connect-mongo";
 import args from "./src/utils/args.js";
+import compression from "express-compression";
+import winston from "./src/middlewares/winston.js";
 
 const server = express();
 const PORT = env.PORT || 8080;
@@ -44,10 +46,16 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(express.static(__dirname + "/public"));
 server.use(morgan("dev"));
+server.use(winston);
 const router = new IndexRouter();
 server.use("/", router.getRouter());
 server.use(errorHandler);
 server.use(pathHandler);
+server.use(
+  compression({
+    brotli: { enabled: true, zlib: {} },
+  })
+);
 
 // Configuración de Socket.IO
 socketServer.on("connection", (socket) => {

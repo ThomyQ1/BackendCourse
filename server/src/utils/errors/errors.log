@@ -1,0 +1,23 @@
+[33mERROR[39m: GET /api/loggers not found path
+[33mERROR[39m: GET /favicon.ico not found path
+[33mERROR[39m: GET /api/loggers not found path
+[33mERROR[39m: GET /favicon.ico not found path
+[33mERROR[39m: GET /api/loggers not found path
+[33mERROR[39m: GET /favicon.ico not found path
+[36mhttp[39m: GET /api/loggers - 18/4/2024, 21:25:41
+[33merror[39m: Este es un mensaje de error de prueba
+[34minfo[39m: Este es un mensaje de información de prueba
+[36mhttp[39m: Este es un mensaje HTTP de prueba
+[36mhttp[39m: GET /favicon.ico - 18/4/2024, 21:25:41
+[36mhttp[39m: GET /api/loggers - 18/4/2024, 21:26:18
+[33merror[39m: Este es un mensaje de error de prueba
+[34minfo[39m: Este es un mensaje de información de prueba
+[36mhttp[39m: Este es un mensaje HTTP de prueba
+[36mhttp[39m: GET /favicon.ico - 18/4/2024, 21:26:18
+[33merror[39m: GET /favicon.ico not found path
+[36mhttp[39m: GET /api/loggers - 18/4/2024, 21:28:01
+[33merror[39m: Este es un mensaje de error de prueba
+[34minfo[39m: Este es un mensaje de información de prueba
+[36mhttp[39m: Este es un mensaje HTTP de prueba
+[36mhttp[39m: GET /favicon.ico - 18/4/2024, 21:28:01
+[33merror[39m: GET /favicon.ico not found path

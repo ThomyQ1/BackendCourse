@@ -1,10 +1,14 @@
-const errorHandler = function errorHandler(error, req, res, next) {
-  console.log(error);
+import winston from "../utils/logger/winston.js";
 
+const errorHandler = function errorHandler(error, req, res, next) {
+  if (!error.statusCode || error.statusCode === 500) {
+    error.statusCode = 500;
+    winston.fatal(error.message);
+  } else {
+    winston.error(error.message);
+  }
   let statusCode = error.statusCode || 500;
   let message = error.message;
-
-  // Si es un error de validación de Mongoose, agregamos más detalles al mensaje
   if (error.errors) {
     const validationErrors = Object.keys(error.errors).map((key) => ({
       field: key,
@@ -12,8 +16,7 @@ const errorHandler = function errorHandler(error, req, res, next) {
     }));
     message += " - Validation Errors: " + JSON.stringify(validationErrors);
   }
-
-  return res.status(statusCode).json({
+  return res.json({
     statusCode,
     message,
   });
