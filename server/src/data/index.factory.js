@@ -2,8 +2,6 @@ import "dotenv/config.js";
 import args from "../utils/args.js";
 import dbConnection from "../utils/db.js";
 
-console.log(args);
-
 const enviroment = args.env;
 
 let dao = {};
@@ -20,15 +18,9 @@ switch (enviroment) {
   case "dev":
     dbConnection();
     console.log("Mongo Connected");
-    const { default: productsMongo } = await import(
-      "../data/mongo/products.mongo.js"
-    );
-    const { default: usersMongo } = await import(
-      "../data/mongo/users.mongo.js"
-    );
-    const { default: ordersMongo } = await import(
-      "../data/mongo/orders.mongo.js"
-    );
+    const { default: productsMongo } = await import("../data/mongo/products.mongo.js");
+    const { default: usersMongo } = await import("../data/mongo/users.mongo.js");
+    const { default: ordersMongo } = await import("../data/mongo/orders.mongo.js");
     dao = { products: productsMongo, users: usersMongo, orders: ordersMongo };
     break;
 

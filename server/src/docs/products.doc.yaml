@@ -1,0 +1,80 @@
+components:
+  schemas:
+    product:
+      type: object
+      properties:
+        title:
+          type: string
+          description: name of the product
+        photo:
+          type: string
+          description: photo of the product
+        price:
+          type: number
+          description: price of the product
+        stock:
+          type: number
+          description: stock available of the product
+      example:
+        title: Campera Alder Trekk
+        photo: https://acdn.mitiendanube.com/stores/001/168/383/products/elyjk00198-6-023bb37f5464b7cb4317138827459002-1024-1024.webp
+        price: 215000
+        stock: 50
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+  responses:
+    res201:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Successfully coded
+        payload:
+          type: object
+          properties:
+            _id:
+              type: string
+            title:
+              type: string
+              description: name of the product
+            photo:
+              type: string
+              description: photo of the product
+            price:
+              type: number
+              description: price of the product
+            stock:
+              type: number
+              description: stock available of the product
+      example:
+        status: success
+        payload:
+          _id: 3bad8b47cb8bbd13fdc1b81b
+          title: Pants
+          photo: https://loremflickr.com/640/480/fashion?lock=7897268048887808
+          price: 144
+          stock: 93
+paths:
+  /api/products:
+    post:
+      summary: To create a product
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/product"
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/res201"

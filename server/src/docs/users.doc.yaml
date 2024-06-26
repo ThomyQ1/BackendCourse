@@ -1,0 +1,74 @@
+components:
+  schemas:
+    Register:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: Name of the user
+        last_name:
+          type: string
+          description: Last name of the user
+        email:
+          type: string
+          description: Email of the user
+        password:
+          type: string
+          description: Password of the user
+      example:
+        first_name: Lautaro
+        last_name: Quevedo
+        email: lautaroquevedo@gmail.com
+        password: hola1234
+  responses:
+    res201:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Successfully coded
+        payload:
+          type: object
+          properties:
+            _id:
+              type: string
+            first_name:
+              type: string
+            last_name:
+              type: string
+            email:
+              type: string
+            photo:
+              type: string
+            role:
+              type: number
+          description: Data of the registered user
+      example:
+        status: success
+        payload:
+          _id: d986873b095952ab7f0ed5e6
+          first_name: marcelo
+          last_name: quevedo
+          photo: https://images.squarespace-cdn.com/content/v1/563b99a2e4b024cc2d8d0510/1583184925522-ZYOD055BTNZ37EKSPF2V/Rudd%2BAdams%2BMasonry%2BTed%2BSmall.jpg
+          email: quevedom@gmail.com
+          role: 0
+paths:
+  /api/sessions/register:
+    post:
+      summary: to register a user
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        description: data of the user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schema/Register"
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#components/responses/res201"

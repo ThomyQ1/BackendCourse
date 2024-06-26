@@ -1,10 +1,14 @@
 import service from "../services/users.services.js";
 
 class SessionsController {
+  constructor() {
+    this.service = service; // Inicializa el servicio aquí
+  }
+
   register = async (req, res, next) => {
-    const { email, name, verifiedCode } = req.user;
-    await this.service.register({ email, name, verifiedCode });
     try {
+      const { email, name } = req.body;
+      await this.service.register({ email, name });
       return res.json({
         statusCode: 201,
         message: "Registered!",
@@ -13,6 +17,7 @@ class SessionsController {
       return next(error);
     }
   };
+
   login = async (req, res, next) => {
     try {
       return res
@@ -28,6 +33,7 @@ class SessionsController {
       return next(error);
     }
   };
+
   google = async (req, res, next) => {
     try {
       return res.success200("Logged in with google!");
@@ -35,6 +41,7 @@ class SessionsController {
       return next(error);
     }
   };
+
   read = async (req, res, next) => {
     try {
       if (req.user) {
@@ -43,12 +50,13 @@ class SessionsController {
           response: "Session with email: " + req.user.email,
         });
       } else {
-        return next(error);
+        throw new Error('User not authenticated'); // Asegura que manejes este caso correctamente
       }
     } catch (error) {
       return next(error);
     }
   };
+
   signout = async (req, res, next) => {
     try {
       return res.clearCookie("token").json({
@@ -59,12 +67,13 @@ class SessionsController {
       return next(error);
     }
   };
+
   verifyAccount = async (req, res, next) => {
     try {
       const { email, verifiedCode } = req.body;
-      const user = await service.readByEmail(email);
+      const user = await this.service.readByEmail(email);
       if (user.verifiedCode === verifiedCode) {
-        await service.update(user._id, { verified: true });
+        await this.service.update(user._id, { verified: true });
         return res.json({
           statusCode: 200,
           message: "Verified user!",
@@ -79,6 +88,7 @@ class SessionsController {
       return next(error);
     }
   };
+
   badauth = (req, res, next) => {
     try {
       return res.error401("Bad auth!");
@@ -86,6 +96,7 @@ class SessionsController {
       return next(error);
     }
   };
+
   alreadysignedout = (req, res, next) => {
     try {
       return res.error400("Already Done!");
@@ -96,24 +107,24 @@ class SessionsController {
 }
 
 export default SessionsController;
-const controller = new SessionsController();
-const {
-  register,
-  login,
-  google,
-  read,
-  signout,
-  verifyAccount,
-  badauth,
-  alreadysignedout,
-} = controller;
-export {
-  register,
-  login,
-  google,
-  read,
-  signout,
-  verifyAccount,
-  badauth,
-  alreadysignedout,
-};
+  const controller = new SessionsController();
+  const {
+    register,
+    login,
+    google,
+    read,
+    signout,
+    verifyAccount,
+    badauth,
+    alreadysignedout,
+  } = controller;
+  export {
+    register,
+    login,
+    google,
+    read,
+    signout,
+    verifyAccount,
+    badauth,
+    alreadysignedout,
+  };

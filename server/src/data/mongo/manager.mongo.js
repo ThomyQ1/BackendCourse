@@ -16,13 +16,13 @@ class MongoManager {
   async read({ filter, options }) {
     try {
       options = { ...options, lean: true };
-      const all = await this.model.paginate(filter, options);
-      if (all.totalDocs === 0) {
+      const result = await this.model.paginate(filter, options);
+      if (!result.docs || result.docs.length === 0) {
         const error = new Error("Not Found");
         error.statusCode = 404;
         throw error;
       }
-      return all;
+      return result.docs;
     } catch (error) {
       throw error;
     }
@@ -69,7 +69,9 @@ class MongoManager {
     try {
       const one = await this.model.findById(id);
       if (!one) {
-        notFoundOne(one);
+        const error = new Error(`Product with id ${id} not found`);
+        error.statusCode = 404;
+        throw error;
       }
       return one;
     } catch (error) {
@@ -90,15 +92,26 @@ class MongoManager {
     try {
       const opt = { new: true };
       const one = await this.model.findByIdAndUpdate(id, data, opt);
-      notFoundOne(one);
+      if (!one) {
+        const error = new Error(`Product with id ${id} not found`);
+        error.statusCode = 404;
+        throw error;
+      }
+      return one;
     } catch (error) {
       throw error;
     }
   }
+
   async destroy(id) {
     try {
-      const one = await this.model.findByIdAndDelete(id);
-      notFoundOne(one);
+      const deletedProduct = await this.model.findByIdAndDelete(id);
+      if (!deletedProduct) {
+        const error = new Error(`Product with id ${id} not found`);
+        error.statusCode = 404;
+        throw error;
+      }
+      return deletedProduct;
     } catch (error) {
       throw error;
     }

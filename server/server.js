@@ -17,6 +17,9 @@ import MongoStore from "connect-mongo";
 import args from "./src/utils/args.js";
 import compression from "express-compression";
 import winston from "./src/middlewares/winston.js";
+import options from "./src/config/swagger.js";
+import swaggerJSDoc from "swagger-jsdoc";
+import { serve, setup } from "swagger-ui-express";
 
 const server = express();
 const PORT = env.PORT || 8080;
@@ -26,8 +29,10 @@ const ready = () => {
 };
 const httpServer = createServer(server);
 const socketServer = new Server(httpServer);
+const specs = swaggerJSDoc(options);
 
 // Configuración de middlewares y rutas
+server.use("/api/docs", serve, setup(specs));
 const FileStore = sessionFileStore(expressSession);
 server.use(cookieParser(process.env.SECRET_KEY));
 
@@ -59,7 +64,7 @@ server.use(
 
 // Configuración de Socket.IO
 socketServer.on("connection", (socket) => {
-  socket.emit("welcome", "Bienvenido a mi ecommerce");
+  socket.emit("bienvenido", "Bienvenido a mi ecommerce");
   socket.emit("productos", productsManager.read());
   socket.on("nuevo producto", async (data) => {
     try {
